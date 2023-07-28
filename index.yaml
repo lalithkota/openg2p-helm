@@ -1,0 +1,60 @@
+apiVersion: v1
+entries:
+  odk-central:
+  - apiVersion: v2
+    created: "2023-07-28T12:34:31.085618+05:30"
+    dependencies:
+    - condition: odk-central-mail.enabled
+      name: odk-central-mail
+      repository: file://charts/odk-mail
+      version: 1.1.0
+    - condition: odk-central-pyxform.enabled
+      name: odk-central-pyxform
+      repository: file://charts/odk-pyxform
+      version: 1.1.0
+    - condition: odk-central-enketo.enabled
+      name: odk-central-enketo
+      repository: file://charts/odk-enketo
+      version: 1.1.0
+    - condition: odk-central-backend.enabled
+      name: odk-central-backend
+      repository: file://charts/odk-backend
+      version: 1.1.0
+    - condition: odk-central-frontend.enabled
+      name: odk-central-frontend
+      repository: file://charts/odk-frontend
+      version: 1.1.0
+    description: A Helm chart for odk-central.
+    digest: 31252c5af222a17b18c4e6c4c82c4f498cefb51b45276443fcc41082dc403e1c
+    keywords:
+    - odk
+    - odk-central
+    maintainers:
+    - email: lalith@openg2p.org
+      name: lalithkota
+    name: odk-central
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/odk-central-1.1.0.tgz
+    version: 1.1.0
+  openg2p:
+  - apiVersion: v2
+    created: "2023-07-28T12:34:31.093617+05:30"
+    dependencies:
+    - alias: mail
+      condition: mail.enabled
+      name: odk-central-mail
+      repository: file://charts/mail
+      version: 1.1.0
+    - condition: odoo.enabled
+      name: odoo
+      repository: https://charts.bitnami.com/bitnami
+      version: 21.6.5
+    description: A Helm chart for OpenG2P Package
+    digest: e74ee0e7064d117aee631ce518b19467ad7472397bb8768713e270ceea35a354
+    name: openg2p
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/openg2p-1.1.0.tgz
+    version: 1.1.0
+generated: "2023-07-28T12:34:31.075082+05:30"
