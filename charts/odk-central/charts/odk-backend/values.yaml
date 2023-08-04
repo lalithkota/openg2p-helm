@@ -42,7 +42,7 @@ readinessProbe:
   failureThreshold: 2
   successThreshold: 1
 
-command: ["./wait-for-it.sh", "postgres:5432", "--", "./start-odk.sh"]
+command: ["./wait-for-it.sh", "${POSTGRES_HOSTNAME}:5432", "--", "./start-odk.sh"]
 args: []
 
 resources:
@@ -70,14 +70,21 @@ extraEnvVarsSecret: []
 
 postgresql:
   # any other postgres helm chart configuration here
-  enabled: true
+  enabled: false
   fullnameOverride: postgres
   auth:
     username: odk
     password: odk
     database: odk
-    existingSecret: ""
   architecture: standalone
+
+externalDatabase:
+  hostname: "postgres-postgresql.postgres"
+  database: "odkdb"
+  username: "odkuser"
+  existingSecret: "postgres-postgresql"
+  existingSecretPasswordKey: "password"
+
 
 # domain name of installation
 # domain: "example.com"

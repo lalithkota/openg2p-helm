@@ -4,7 +4,7 @@ metadata:
   name: {{ include "common.names.fullname" . }}
 data:
   {{- $files := .Files }}
-  {{- range tuple "config.json.template" }}
+  {{- range tuple "config.json.template" "start-odk.sh" }}
   {{ . }}: |-
       {{ $files.Get . | nindent 6 }}
   {{- end }}
