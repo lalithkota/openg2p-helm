@@ -3,7 +3,7 @@ entries:
   odk-central:
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2023-08-04T05:44:36.379974787Z"
+    created: "2023-08-07T11:49:32.777811988Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -41,7 +41,7 @@ entries:
   openg2p:
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2023-08-04T05:44:36.388335985Z"
+    created: "2023-08-07T11:49:32.796341584Z"
     dependencies:
     - alias: mail
       condition: mail.enabled
@@ -53,10 +53,10 @@ entries:
       repository: https://charts.bitnami.com/bitnami
       version: 21.6.5
     description: A Helm chart for OpenG2P Package
-    digest: f12aff3be201944ace833df89802322b5beea636be71ddc4520a6cc0673322cd
+    digest: 00c04bc561869fd0cd3b7c4a7a90cdb3a2ca95c37c68513c8a042b3977ba2d3a
     name: openg2p
     type: application
     urls:
     - https://mosip.github.io/mosip-helm/openg2p-1.1.0.tgz
     version: 1.1.0
-generated: "2023-08-04T05:44:36.367757098Z"
+generated: "2023-08-07T11:49:32.765623493Z"
