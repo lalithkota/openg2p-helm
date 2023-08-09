@@ -76,7 +76,7 @@ jobs:
     - name: Update index.yaml
       run: |
         git status
-        helm repo index --url https://mosip.github.io/mosip-helm/ .
+        helm repo index --url https://openg2p.github.io/openg2p-helm/ .
       if: env.SKIP != 'TRUE'
 
     - name: Commit Changes to repository
