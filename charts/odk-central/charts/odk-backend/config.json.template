@@ -1,10 +1,10 @@
 {
   "default": {
     "database": {
-      "host": "postgres",
-      "user": "odk",
-      "password": "odk",
-      "database": "odk"
+      "host": "${POSTGRES_HOSTNAME}",
+      "user": "${POSTGRES_USERNAME}",
+      "password": "${POSTGRES_PASSWORD}",
+      "database": "${POSTGRES_DATABASE}"
     },
     "email": {
       "serviceAccount": "${SYSADMIN_EMAIL}",

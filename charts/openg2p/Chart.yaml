@@ -3,7 +3,7 @@ name: openg2p
 description: A Helm chart for OpenG2P Package
 type: application
 version: 1.1.0
-appVersion: ""
+appVersion: "1.1.0"
 dependencies:
 - name: odk-central-mail
   alias: mail

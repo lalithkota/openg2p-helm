@@ -59,4 +59,3 @@ postgresIngress:
   istioControllerLabel:
     istio: ingressgateway
   port: 5433
-

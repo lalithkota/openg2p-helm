@@ -49,6 +49,33 @@ spec:
               {{- else }}
               value: {{ .Values.global.httpsPort | quote }}
               {{- end }}
+            - name: POSTGRES_HOSTNAME
+              {{- if .Values.postgresql.enabled }}
+              value: postgres
+              {{- else }}
+              value: {{ .Values.externalDatabase.hostname | quote }}
+              {{- end }}
+            - name: POSTGRES_USERNAME
+              {{- if .Values.postgresql.enabled }}
+              value: {{ .Values.postgresql.auth.username | quote }}
+              {{- else }}
+              value: {{ .Values.externalDatabase.username | quote }}
+              {{- end }}
+            - name: POSTGRES_PASSWORD
+              {{- if .Values.postgresql.enabled }}
+              value: {{ .Values.postgresql.auth.password | quote }}
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.externalDatabase.existingSecret | quote }}
+                  key: {{ .Values.externalDatabase.existingSecretPasswordKey | quote }}
+              {{- end }}
+            - name: POSTGRES_DATABASE
+              {{- if .Values.postgresql.enabled }}
+              value: {{ .Values.postgresql.auth.database | quote }}
+              {{- else }}
+              value: {{ .Values.externalDatabase.database | quote }}
+              {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -84,13 +111,20 @@ spec:
           - name: enketo-api-key
             mountPath: /etc/secrets/enketo-api-key
             subPath: {{ .Values.enketo.apiKeySecret.key }}
-          - name: backend-conf
+          - name: config-json-template
             mountPath: /usr/share/odk/config.json.template
             subPath: config.json.template
+          - name: start-odk-command
+            mountPath: /usr/odk/start-odk.sh
+            subPath: start-odk.sh
       volumes:
       - name: enketo-api-key
         secret:
           secretName: {{ .Values.enketo.apiKeySecret.name }}
-      - name: backend-conf
+      - name: start-odk-command
+        configMap:
+          defaultMode: 493
+          name: {{ include "common.names.fullname" . }}
+      - name: config-json-template
         configMap:
           name: {{ include "common.names.fullname" . }}
