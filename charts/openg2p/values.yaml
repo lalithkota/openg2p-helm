@@ -81,7 +81,7 @@ istio:
       credentialName: ""
 
 postgresIngress:
-  enabled: true
+  enabled: false
   type: istio # Define for type ingress
   # host not need. Because tcp.
   istioControllerLabel:
