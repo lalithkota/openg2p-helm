@@ -101,7 +101,7 @@ istio:
     enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
-    prefix: "/spar/v1"
+    prefix: "/spar/v1/"
     rewriteUri: "/"
   gateway:
     enabled: false
