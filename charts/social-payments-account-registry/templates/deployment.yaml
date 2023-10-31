@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "spar.fullname" . }}
+  labels:
+    {{- include "spar.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "spar.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "spar.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "spar.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SPAR_CORE_DB_HOSTNAME
+              {{- if .Values.envVars.SPAR_CORE_DB_HOSTNAME }}
+              value: {{ .Values.envVars.SPAR_CORE_DB_HOSTNAME | quote }}
+              {{- else }}
+              value: {{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}
+              {{- end }}
+            - name: SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL
+              {{- if .Values.envVars.SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL }}
+              value: {{ .Values.envVars.SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL | quote }}
+              {{- else }}
+              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" .) }}
+              {{- end }}
+            - name: SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL
+              {{- if .Values.envVars.SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL }}
+              value: {{ .Values.envVars.SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL | quote }}
+              {{- else }}
+              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" .) }}
+              {{- end }}
+            - name: SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL
+              {{- if .Values.envVars.SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL }}
+              value: {{ .Values.envVars.SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL | quote }}
+              {{- else }}
+              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" .) }}
+              {{- end }}
+          {{- range $k, $v := .Values.envVars }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+          {{- end }}
+          {{- range $k, $v := .Values.envVarsFrom }}
+            - name: {{ $k }}
+              {{- toYaml $v | nindent 14 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.containerPort }}
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.containerPort }}
+            failureThreshold: 20
+            periodSeconds: 30
+            timeoutSeconds: 10
+            initialDelaySeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: 15
+            periodSeconds: 60
+            failureThreshold: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
