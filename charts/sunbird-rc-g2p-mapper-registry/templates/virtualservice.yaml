@@ -22,7 +22,7 @@ spec:
   http:
   - match:
     - uri:
-        prefix: {{ .Values.mapper.istio.virtualservice.prefix }}
+        prefix: {{ .Values.istio.virtualservice.prefix }}
     {{- if .Values.istio.virtualservice.rewriteUri }}
     rewrite:
       uri: {{ .Values.istio.virtualservice.rewriteUri }}
@@ -31,6 +31,6 @@ spec:
     - destination:
         host: {{ include "mapper.fullname" . }}
         port:
-          number: {{ .Values.mapper.service.port }}
+          number: {{ .Values.service.port }}
 {{- end }}
 {{- end }}

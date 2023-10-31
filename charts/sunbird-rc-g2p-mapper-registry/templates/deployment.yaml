@@ -34,21 +34,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: REGISTRY_URL
-              {{- if .Values.envVars.REGISTRY_URL }}
-              value: {{ .Values.envVars.REGISTRY_URL | quote }}
-              {{- else }}
-              value: {{ printf "http://%s/" (include "registry.fullname" .Subcharts.registry) }}
-              {{- end }}
-            - name: CALLBACK_SERVICE_URL
-              {{- if .Values.envVars.CALLBACK_SERVICE_URL }}
-              value: {{ .Values.envVars.CALLBACK_SERVICE_URL | quote }}
-              {{- else }}
-              value: {{ printf "http://%s-callback-service/" (include "mapper.fullname" .) }}
-              {{- end }}
           {{- range $k, $v := .Values.envVars }}
             - name: {{ $k }}
+            {{- if and (eq $k "REGISTRY_URL") (not $v) }}
+              value: {{ printf "http://%s/" (include "registry.fullname" $.Subcharts.registry) }}
+            {{- else if and (eq $k "CALLBACK_SERVICE_URL") (not $v) }}
+              value: {{ printf "http://%s-callback-service/" (include "mapper.fullname" $) }}
+            {{- else }}
               value: {{ $v | quote }}
+            {{- end }}
           {{- end }}
           {{- range $k, $v := .Values.envVarsFrom }}
             - name: {{ $k }}
@@ -59,8 +53,8 @@ spec:
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
           readinessProbe:
-            httpGet:
-              path: /v0.1.0/docs/swagger.json
+            # TODO: Make this probe better than tcp probe
+            tcpSocket:
               port: {{ .Values.containerPort }}
             failureThreshold: 20
             periodSeconds: 30

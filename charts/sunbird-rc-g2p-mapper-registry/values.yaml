@@ -74,14 +74,16 @@ tolerations: []
 
 affinity: {}
 
-envVars: {}
+envVars:
+  REGISTRY_URL: "" # leave blank to use default
+  CALLBACK_SERVICE_URL: "" # Leave blank to use default
 
 envVarsFrom: {}
 
 istio:
   enabled: true
   virtualservice:
-    enabled: false
+    enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
     prefix: "/mapper/v0.1.0"

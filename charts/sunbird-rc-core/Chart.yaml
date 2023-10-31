@@ -3,7 +3,7 @@ name: sunbird-rc-core
 description: A Helm chart for Sunbird Registry
 type: application
 version: 0.1.0
-appVersion: "0.0.14"
+appVersion: "v0.0.14"
 dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts

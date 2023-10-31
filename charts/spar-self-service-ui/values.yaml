@@ -83,7 +83,7 @@ envVarsFrom: {}
 istio:
   enabled: true
   virtualservice:
-    enabled: false
+    enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
     prefix: "/selfservice"

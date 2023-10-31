@@ -93,17 +93,19 @@ envVars:
   notification_async_enabled: false
   notification_enabled: false
 
-enVarsFrom:
-  connectionInfo_password:
-    valueFrom:
-      secretKeyRef:
-        name: postgresql
-        key: password
+envVarsFrom:
+  connectionInfo_password: {}
+  # leave blank to use default
+  # connectionInfo_password:
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: postgresql
+  #       key: password
 
 istio:
   enabled: true
   virtualservice:
-    enabled: false
+    enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
     prefix: "/registry"
@@ -123,6 +125,7 @@ postgresql:
   enabled: true
   auth:
     username: sunbirdrcuser
+    database: registry
   primary:
     extendedConfiguration: |-
       wal_level = logical

@@ -73,6 +73,7 @@ tolerations: []
 affinity: {}
 
 envVars:
+  SPAR_CORE_DB_HOSTNAME: "" # Leave blank to take default value
   SPAR_CORE_DB_USERNAME: "sparuser"
   SPAR_CORE_OPENAPI_ROOT_PATH: "/spar/v1"
   SPAR_CORE_AUTH_DEFAULT_ISSUERS: '["https://esignet.openg2p.sandbox.net/v1/esignet"]'
@@ -81,20 +82,23 @@ envVars:
   SPAR_G2P_CONNECT_MAPPER_RESOLVE_URL: "http://mapper/v0.1.0/mapper/resolve" # Change to the url according to ID Mapper provider
   SPAR_G2P_CONNECT_MAPPER_LINK_URL: "http://mapper/v0.1.0/mapper/link" # Change to the url according to ID Mapper provider
   SPAR_G2P_CONNECT_MAPPER_UPDATE_URL: "http://mapper/v0.1.0/mapper/update" # Change to the url according to ID Mapper provider
+  SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL: "" # Leave blank to take default value
+  SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL: "" # Leave blank to take default value
+  SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL: "" # Leave blank to take default value
 
 envVarsFrom:
-  SPAR_CORE_DB_PASSWORD:
-    valueFrom:
-      secretKeyRef:
-        name: postgresql
-        key: password
-
-envVarsFrom: {}
+  SPAR_CORE_DB_PASSWORD: {}
+  # Leave blank to take default value
+  # SPAR_CORE_DB_PASSWORD:
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: postgresql
+  #       key: password
 
 istio:
   enabled: true
   virtualservice:
-    enabled: false
+    enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
     prefix: "/spar/v1"
@@ -114,6 +118,7 @@ postgresql:
   enabled: true
   auth:
     username: sparuser
+    database: spardb
   primary:
     extendedConfiguration: |-
       wal_level = logical

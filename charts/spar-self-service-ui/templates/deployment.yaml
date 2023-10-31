@@ -47,16 +47,16 @@ spec:
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
           readinessProbe:
-            httpGet:
-              path: /spar
+            # TODO: Make this probe better than tcp probe
+            tcpSocket:
               port: {{ .Values.containerPort }}
             failureThreshold: 20
             periodSeconds: 30
             timeoutSeconds: 10
             initialDelaySeconds: 30
           livenessProbe:
-            httpGet:
-              path: /spar
+            # TODO: Make this probe better than tcp probe
+            tcpSocket:
               port: {{ .Values.containerPort }}
             initialDelaySeconds: 15
             periodSeconds: 60

@@ -27,6 +27,34 @@ spec:
       serviceAccountName: {{ include "spar.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: postgres-checker
+          image: jbergknoff/postgresql-client
+          restartPolicy: Always
+          command:
+          - 'sh'
+          - '-c'
+          - 'until pg_isready -U $SPAR_CORE_DB_USERNAME -h $SPAR_CORE_DB_HOSTNAME -p ${SPAR_CORE_DB_PORT:-5432} -d ${SPAR_CORE_DB_DBNAME:-spardb}; do sleep 3; done'
+          env:
+          {{- range $k, $v := .Values.envVars }}
+            - name: {{ $k }}
+            {{- if and (eq $k "SPAR_CORE_DB_HOSTNAME") (not $v) }}
+              value: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
+            {{- else }}
+              value: {{ $v | quote }}
+            {{- end }}
+          {{- end }}
+          {{- range $k, $v := .Values.envVarsFrom }}
+            - name: {{ $k }}
+            {{- if and (eq $k "SPAR_CORE_DB_PASSWORD") (not $v) }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
+                  key: password
+            {{- else }}
+              {{- toYaml $v | nindent 14 }}
+            {{- end }}
+          {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -34,37 +62,30 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: SPAR_CORE_DB_HOSTNAME
-              {{- if .Values.envVars.SPAR_CORE_DB_HOSTNAME }}
-              value: {{ .Values.envVars.SPAR_CORE_DB_HOSTNAME | quote }}
-              {{- else }}
-              value: {{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}
-              {{- end }}
-            - name: SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL
-              {{- if .Values.envVars.SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL }}
-              value: {{ .Values.envVars.SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL | quote }}
-              {{- else }}
-              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" .) }}
-              {{- end }}
-            - name: SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL
-              {{- if .Values.envVars.SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL }}
-              value: {{ .Values.envVars.SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL | quote }}
-              {{- else }}
-              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" .) }}
-              {{- end }}
-            - name: SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL
-              {{- if .Values.envVars.SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL }}
-              value: {{ .Values.envVars.SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL | quote }}
-              {{- else }}
-              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" .) }}
-              {{- end }}
           {{- range $k, $v := .Values.envVars }}
             - name: {{ $k }}
+            {{- if and (eq $k "SPAR_CORE_DB_HOSTNAME") (not $v) }}
+              value: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
+            {{- else if and (eq $k "SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL") (not $v) }}
+              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" $) }}
+            {{- else if and (eq $k "SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL") (not $v) }}
+              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" $) }}
+            {{- else if and (eq $k "SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL") (not $v) }}
+              value: {{ printf "http://%s/callback/mapper" (include "spar.fullname" $) }}
+            {{- else }}
               value: {{ $v | quote }}
+            {{- end }}
           {{- end }}
           {{- range $k, $v := .Values.envVarsFrom }}
             - name: {{ $k }}
+            {{- if and (eq $k "SPAR_CORE_DB_PASSWORD") (not $v) }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
+                  key: password
+            {{- else }}
               {{- toYaml $v | nindent 14 }}
+            {{- end }}
           {{- end }}
           ports:
             - name: http
