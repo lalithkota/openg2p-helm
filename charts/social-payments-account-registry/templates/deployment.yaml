@@ -30,7 +30,6 @@ spec:
       initContainers:
         - name: postgres-checker
           image: jbergknoff/postgresql-client
-          restartPolicy: Always
           command:
           - 'sh'
           - '-c'
