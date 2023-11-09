@@ -1,0 +1,136 @@
+replicaCount: 1
+host: spar.openg2p.sandbox.net
+image:
+  repository: openg2p/social-payments-account-registry
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "develop"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+containerPort: 8000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - paths:
+        - path: /spar/v1(/|$)(.*)
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  #  requests:
+  #    cpu: 500m
+  #    memory: 2G
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+envVars:
+  SPAR_CORE_DB_HOSTNAME: "" # Leave blank to take default value
+  SPAR_CORE_DB_USERNAME: "sparuser"
+  SPAR_CORE_OPENAPI_ROOT_PATH: "/spar/v1"
+  SPAR_CORE_AUTH_DEFAULT_ISSUERS: '["https://esignet.openg2p.sandbox.net/v1/esignet"]'
+  SPAR_CORE_AUTH_DEFAULT_JWKS_URLS: '["https://esignet.openg2p.sandbox.mosip.net/v1/esignet/oauth/.well-known/jwks.json"]'
+  SPAR_G2P_CONNECT_MAPPER_API_TIMEOUT_SECS: "1"
+  SPAR_G2P_CONNECT_MAPPER_RESOLVE_URL: "http://mapper/v0.1.0/mapper/resolve" # Change to the url according to ID Mapper provider
+  SPAR_G2P_CONNECT_MAPPER_LINK_URL: "http://mapper/v0.1.0/mapper/link" # Change to the url according to ID Mapper provider
+  SPAR_G2P_CONNECT_MAPPER_UPDATE_URL: "http://mapper/v0.1.0/mapper/update" # Change to the url according to ID Mapper provider
+  SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL: "" # Leave blank to take default value
+  SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL: "" # Leave blank to take default value
+  SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL: "" # Leave blank to take default value
+
+envVarsFrom:
+  SPAR_CORE_DB_PASSWORD: {}
+  # Leave blank to take default value
+  # SPAR_CORE_DB_PASSWORD:
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: postgresql
+  #       key: password
+
+istio:
+  enabled: true
+  virtualservice:
+    enabled: true
+    host: ""
+    gateway: "istio-system/all-hosts"
+    prefix: "/spar/v1/"
+    rewriteUri: "/"
+  gateway:
+    enabled: false
+    host: ""
+    ingressController:
+      istio: ingressgateway
+    httpTlsRedirect: true
+    tls:
+      enabled: true
+      mode: SIMPLE
+      credentialName: ""
+
+postgresql:
+  enabled: true
+  auth:
+    username: sparuser
+    database: spardb
+  primary:
+    extendedConfiguration: |-
+      wal_level = logical
+      max_wal_senders = 20
+      max_replication_slots = 10
+
+sunbird-rc-g2p-mapper-registry:
+  enabled: true
+  fullnameOverride: mapper
+  registry:
+    fullnameOverride: mapper-registry
+    elasticsearch:
+      fullnameOverride: mapper-registry-elasticsearch
+    postgresql:
+      fullnameOverride: mapper-registry-postgresql
