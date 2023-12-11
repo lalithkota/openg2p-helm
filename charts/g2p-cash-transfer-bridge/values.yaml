@@ -1,8 +1,8 @@
 replicaCount: 1
 global:
-  hostname: spar.openg2p.sandbox.net
+  hostname: gctb.openg2p.sandbox.net
 image:
-  repository: openg2p/social-payments-account-registry
+  repository: openg2p/g2p-cash-transfer-bridge
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "develop"
@@ -48,7 +48,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - paths:
-        - path: /spar/v1(/|$)(.*)
+        - path: /g2pCashTransferBridge/v1(/|$)(.*)
           pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
@@ -74,24 +74,18 @@ tolerations: []
 affinity: {}
 
 envVars:
-  SPAR_CORE_DB_HOSTNAME: "" # Leave blank to take default value
-  SPAR_CORE_DB_USERNAME: "sparuser"
-  SPAR_CORE_OPENAPI_ROOT_PATH: "/spar/v1"
-  SPAR_CORE_AUTH_DEFAULT_ISSUERS: '["https://esignet.openg2p.sandbox.net/v1/esignet"]'
-  SPAR_CORE_AUTH_DEFAULT_JWKS_URLS: '["https://esignet.openg2p.sandbox.mosip.net/v1/esignet/oauth/.well-known/jwks.json"]'
-  SPAR_G2P_CONNECT_MAPPER_API_TIMEOUT_SECS: "1"
-  SPAR_G2P_CONNECT_MAPPER_RESOLVE_URL: "http://mapper/v0.1.0/mapper/resolve" # Change to the url according to ID Mapper provider
-  SPAR_G2P_CONNECT_MAPPER_LINK_URL: "http://mapper/v0.1.0/mapper/link" # Change to the url according to ID Mapper provider
-  SPAR_G2P_CONNECT_MAPPER_UPDATE_URL: "http://mapper/v0.1.0/mapper/update" # Change to the url according to ID Mapper provider
-  SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL: "" # Leave blank to take default value
-  SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL: "" # Leave blank to take default value
-  SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL: "" # Leave blank to take default value
-  SPAR_G2P_CONNECT_QUEUE_REDIS_HOST: "" # Leave blank to take default value
+  GCTB_CORE_DB_HOSTNAME: "" # Leave blank to take default value
+  GCTB_CORE_DB_USERNAME: "gctbuser"
+  GCTB_CORE_OPENAPI_ROOT_PATH: "/g2pCashTransferBridge/v1"
+  GCTB_ID_TRANSLATE_MAPPER_API_TIMEOUT_SECS: "1"
+  GCTB_ID_TRANSLATE_MAPPER_RESOLVE_URL: "http://mapper.spar/v0.1.0/mapper/resolve" # Change to the url according to ID Mapper provider
+  GCTB_ID_TRANSLATE_MAPPER_RESOLVE_SENDER_URL: "" # Leave blank to take default value
+  GCTB_ID_TRANSLATE_QUEUE_REDIS_HOST: "" # Leave blank to take default value
 
 envVarsFrom:
-  SPAR_CORE_DB_PASSWORD: {}
+  GCTB_CORE_DB_PASSWORD: {}
   # Leave blank to take default value
-  # SPAR_CORE_DB_PASSWORD:
+  # GCTB_CORE_DB_PASSWORD:
   #   valueFrom:
   #     secretKeyRef:
   #       name: postgresql
@@ -103,7 +97,7 @@ istio:
     enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
-    prefix: "/spar/v1/"
+    prefix: "/g2pCashTransferBridge/v1/"
     rewriteUri: "/"
   gateway:
     enabled: false
@@ -119,8 +113,8 @@ istio:
 postgresql:
   enabled: true
   auth:
-    username: sparuser
-    database: spardb
+    username: gctbuser
+    database: gctbdb
   primary:
     extendedConfiguration: |-
       wal_level = logical
@@ -132,13 +126,3 @@ redis:
   architecture: standalone
   auth:
     enabled: false
-
-sunbird-rc-g2p-mapper-registry:
-  enabled: true
-  fullnameOverride: mapper
-  registry:
-    fullnameOverride: mapper-registry
-    elasticsearch:
-      fullnameOverride: mapper-registry-elasticsearch
-    postgresql:
-      fullnameOverride: mapper-registry-postgresql
