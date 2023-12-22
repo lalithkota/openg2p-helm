@@ -1,7 +1,7 @@
 replicaCount: 1
 host: spar.openg2p.sandbox.net
 image:
-  repository: openg2p/spar-ui
+  repository: openg2p/spar-self-service-ui
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "develop"

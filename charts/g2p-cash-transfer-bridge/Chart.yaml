@@ -1,6 +1,6 @@
 apiVersion: v2
-name: social-payments-account-registry
-description: A Helm chart for Social Payments Account Registry
+name: g2p-cash-transfer-bridge
+description: A Helm chart for G2P Cash Transfer Bridge
 type: application
 version: 0.1.0
 appVersion: "0.1.0"
