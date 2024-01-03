@@ -1,6 +1,7 @@
-replicaCount: 1
 global:
   hostname: gctb.openg2p.sandbox.net
+
+replicaCount: 1
 image:
   repository: openg2p/g2p-cash-transfer-bridge
   pullPolicy: Always

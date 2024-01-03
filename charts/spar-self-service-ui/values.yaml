@@ -1,5 +1,7 @@
+global:
+  hostname: spar.openg2p.sandbox.net
+
 replicaCount: 1
-host: spar.openg2p.sandbox.net
 image:
   repository: openg2p/spar-self-service-ui
   pullPolicy: Always
