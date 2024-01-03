@@ -1,6 +1,7 @@
-replicaCount: 1
 global:
   hostname: spar.openg2p.sandbox.net
+
+replicaCount: 1
 image:
   repository: openg2p/social-payments-account-registry
   pullPolicy: Always

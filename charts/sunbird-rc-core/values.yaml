@@ -1,5 +1,7 @@
+global:
+  hostname: openg2p.sandbox.net
+
 replicaCount: 1
-host: openg2p.sandbox.net
 image:
   repository: ghcr.io/sunbird-rc/sunbird-rc-core
   pullPolicy: IfNotPresent
