@@ -1,9 +1,29 @@
 apiVersion: v1
 entries:
+  g2p-cash-transfer-bridge:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-01-03T05:53:02.83158773Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    - condition: redis.enabled
+      name: redis
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 18.x.x
+    description: A Helm chart for G2P Cash Transfer Bridge
+    digest: 4439b7d0648e2394362ca89be0c5f65f1f7a47857d7dddbb234913a49e3f6f30
+    name: g2p-cash-transfer-bridge
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/g2p-cash-transfer-bridge-0.1.0.tgz
+    version: 0.1.0
   odk-central:
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2023-08-10T00:31:38.309387122Z"
+    created: "2024-01-03T05:53:02.839604279Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -41,7 +61,7 @@ entries:
   openg2p:
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2023-08-10T00:31:38.318147847Z"
+    created: "2024-01-03T05:53:02.84672344Z"
     dependencies:
     - alias: mail
       condition: mail.enabled
@@ -59,4 +79,73 @@ entries:
     urls:
     - https://openg2p.github.io/openg2p-helm/openg2p-1.1.0.tgz
     version: 1.1.0
-generated: "2023-08-10T00:31:38.296269636Z"
+  social-payments-account-registry:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-01-03T05:53:02.868092704Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    - condition: redis.enabled
+      name: redis
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 18.x.x
+    description: A Helm chart for Social Payments Account Registry
+    digest: f2c9cf5d6b9fb4ac8497199631cf478d3002058301023b5fc9d3e5813dbe962d
+    name: social-payments-account-registry
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/social-payments-account-registry-0.1.0.tgz
+    version: 0.1.0
+  spar-self-service-ui:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-01-03T05:53:02.868632415Z"
+    description: A Helm chart for UI for Self Service Portal for Social Payments Account
+      Registry
+    digest: c5003466246f65b778259906dcb0592c2fb76dfe8311c6709f3cc1d936b6848a
+    name: spar-self-service-ui
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/spar-self-service-ui-0.1.0.tgz
+    version: 0.1.0
+  sunbird-rc-core:
+  - apiVersion: v2
+    appVersion: v0.0.14
+    created: "2024-01-03T05:53:02.880769045Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 19.x.x
+    description: A Helm chart for Sunbird Registry
+    digest: d697300358b7cf421a66fcb977ecad1a3a8d5b2c4ae666ea5507e19ef2c368f0
+    name: sunbird-rc-core
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/sunbird-rc-core-0.1.0.tgz
+    version: 0.1.0
+  sunbird-rc-g2p-mapper-registry:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2024-01-03T05:53:02.893329545Z"
+    dependencies:
+    - alias: registry
+      condition: registry.enabled
+      name: sunbird-rc-core
+      repository: file://charts/sunbird-rc-core
+      version: 0.1.0
+    description: A Helm chart for Sunbird RC G2P Mapper Registry
+    digest: cf266b580ee5c3f9de426aa02d32734bb1e1fe4045c1bd60d3a585132c4063ac
+    name: sunbird-rc-g2p-mapper-registry
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/sunbird-rc-g2p-mapper-registry-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-01-03T05:53:02.821260656Z"
