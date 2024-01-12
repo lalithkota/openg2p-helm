@@ -80,14 +80,14 @@ envVars:
   SPAR_CORE_OPENAPI_ROOT_PATH: "/spar/v1"
   SPAR_CORE_AUTH_DEFAULT_ISSUERS: '["https://esignet.openg2p.sandbox.net/v1/esignet"]'
   SPAR_CORE_AUTH_DEFAULT_JWKS_URLS: '["https://esignet.openg2p.sandbox.mosip.net/v1/esignet/oauth/.well-known/jwks.json"]'
-  SPAR_G2P_CONNECT_MAPPER_API_TIMEOUT_SECS: "1"
-  SPAR_G2P_CONNECT_MAPPER_RESOLVE_URL: "http://mapper/v0.1.0/mapper/resolve" # Change to the url according to ID Mapper provider
-  SPAR_G2P_CONNECT_MAPPER_LINK_URL: "http://mapper/v0.1.0/mapper/link" # Change to the url according to ID Mapper provider
-  SPAR_G2P_CONNECT_MAPPER_UPDATE_URL: "http://mapper/v0.1.0/mapper/update" # Change to the url according to ID Mapper provider
-  SPAR_G2P_CONNECT_MAPPER_RESOLVE_SENDER_URL: "" # Leave blank to take default value
-  SPAR_G2P_CONNECT_MAPPER_LINK_SENDER_URL: "" # Leave blank to take default value
-  SPAR_G2P_CONNECT_MAPPER_UPDATE_SENDER_URL: "" # Leave blank to take default value
-  SPAR_G2P_CONNECT_QUEUE_REDIS_HOST: "" # Leave blank to take default value
+  SPAR_CONNECTOR_G2PCONNECT_MAPPER_API_TIMEOUT_SECS: "1"
+  SPAR_CONNECTOR_G2PCONNECT_MAPPER_RESOLVE_URL: "http://mapper/v0.1.0/mapper/resolve" # Change to the url according to ID Mapper provider
+  SPAR_CONNECTOR_G2PCONNECT_MAPPER_LINK_URL: "http://mapper/v0.1.0/mapper/link" # Change to the url according to ID Mapper provider
+  SPAR_CONNECTOR_G2PCONNECT_MAPPER_UPDATE_URL: "http://mapper/v0.1.0/mapper/update" # Change to the url according to ID Mapper provider
+  SPAR_CONNECTOR_G2PCONNECT_MAPPER_RESOLVE_SENDER_URL: "" # Leave blank to take default value
+  SPAR_CONNECTOR_G2PCONNECT_MAPPER_LINK_SENDER_URL: "" # Leave blank to take default value
+  SPAR_CONNECTOR_G2PCONNECT_MAPPER_UPDATE_SENDER_URL: "" # Leave blank to take default value
+  SPAR_CONNECTOR_G2PCONNECT_QUEUE_REDIS_HOST: "" # Leave blank to take default value
 
 envVarsFrom:
   SPAR_CORE_DB_PASSWORD: {}
