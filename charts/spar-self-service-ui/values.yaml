@@ -80,8 +80,6 @@ envVars:
 
 envVarsFrom: {}
 
-envVarsFrom: {}
-
 istio:
   enabled: true
   virtualservice:

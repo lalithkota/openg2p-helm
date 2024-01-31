@@ -34,56 +34,14 @@ spec:
           - 'sh'
           - '-c'
           - 'until pg_isready -U $GCTB_CORE_DB_USERNAME -h $GCTB_CORE_DB_HOSTNAME -p ${GCTB_CORE_DB_PORT:-5432} -d ${GCTB_CORE_DB_DBNAME:-gctbdb}; do sleep 3; done'
-          env:
-          {{- range $k, $v := .Values.envVars }}
-            - name: {{ $k }}
-            {{- if and (eq $k "GCTB_CORE_DB_HOSTNAME") (not $v) }}
-              value: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
-            {{- else }}
-              value: {{ $v | quote }}
-            {{- end }}
-          {{- end }}
-          {{- range $k, $v := .Values.envVarsFrom }}
-            - name: {{ $k }}
-            {{- if and (eq $k "GCTB_CORE_DB_PASSWORD") (not $v) }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
-                  key: password
-            {{- else }}
-              {{- toYaml $v | nindent 14 }}
-            {{- end }}
-          {{- end }}
+          env: {{ include "gctb.envVars" . | nindent 10 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-          {{- range $k, $v := .Values.envVars }}
-            - name: {{ $k }}
-            {{- if and (eq $k "GCTB_CORE_DB_HOSTNAME") (not $v) }}
-              value: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
-            {{- else if and (eq $k "GCTB_ID_TRANSLATE_QUEUE_REDIS_HOST") (not $v) }}
-              value: {{ printf "%s-master" (include "common.names.fullname" $.Subcharts.redis) }}
-            {{- else if and (eq $k "GCTB_ID_TRANSLATE_MAPPER_RESOLVE_SENDER_URL") (not $v) }}
-              value: {{ printf "http://%s.%s/internal/callback/mapper" (include "gctb.fullname" $) $.Release.Namespace }}
-            {{- else }}
-              value: {{ $v | quote }}
-            {{- end }}
-          {{- end }}
-          {{- range $k, $v := .Values.envVarsFrom }}
-            - name: {{ $k }}
-            {{- if and (eq $k "GCTB_CORE_DB_PASSWORD") (not $v) }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
-                  key: password
-            {{- else }}
-              {{- toYaml $v | nindent 14 }}
-            {{- end }}
-          {{- end }}
+          env: {{ include "gctb.envVars" . | nindent 10 }}
           ports:
             - name: http
               containerPort: {{ .Values.containerPort }}

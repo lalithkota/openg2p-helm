@@ -33,15 +33,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-          {{- range $k, $v := .Values.envVars }}
-            - name: {{ $k }}
-              value: {{ $v | quote }}
-          {{- end }}
-          {{- range $k, $v := .Values.envVarsFrom }}
-            - name: {{ $k }}
-              {{- toYaml $v | nindent 14 }}
-          {{- end }}
+          env: {{ include "sparSelfServiceUi.envVars" . | nindent 10 }}
           ports:
             - name: http
               containerPort: {{ .Values.containerPort }}

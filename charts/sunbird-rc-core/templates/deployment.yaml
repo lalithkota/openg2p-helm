@@ -33,28 +33,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-          {{- range $k, $v := .Values.envVars }}
-            - name: {{ $k }}
-            {{- if and (not $v) (eq $k "connectionInfo_uri") }}
-              value: {{ printf "jdbc:postgresql://%s:5432/registry" (include "postgresql.v1.primary.fullname" $.Subcharts.postgresql) }}
-            {{- else if and (eq $k "elastic_search_connection_url") (not $v) }}
-              value: {{ printf "http://%s:9200" (include "elasticsearch.service.name" $.Subcharts.elasticsearch) }}
-            {{- else }}
-              value: {{ $v | quote }}
-            {{- end }}
-          {{- end }}
-          {{- range $k, $v := .Values.envVarsFrom }}
-            - name: {{ $k }}
-            {{- if and (eq $k "connectionInfo_password") (not $v) }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "postgresql.v1.primary.fullname" $.Subcharts.postgresql }}
-                  key: password
-            {{- else }}
-              {{- toYaml $v | nindent 14 }}
-            {{- end }}
-          {{- end }}
+          env: {{ include "registry.envVars" . | nindent 10 }}
           ports:
             - name: http
               containerPort: {{ .Values.containerPort }}

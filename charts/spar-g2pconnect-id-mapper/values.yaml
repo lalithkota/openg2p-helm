@@ -1,12 +1,12 @@
 global:
-  hostname: openg2p.sandbox.net
+  hostname: spar.openg2p.sandbox.net
 
 replicaCount: 1
 image:
-  repository: ghcr.io/sunbird-rc/sunbird-rc-core
-  pullPolicy: IfNotPresent
+  repository: openg2p/spar-g2pconnect-id-mapper
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "develop"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -34,7 +34,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-containerPort: 8081
+containerPort: 8000
 
 service:
   type: ClusterIP
@@ -49,7 +49,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - paths:
-        - path: /registry(/|$)(.*)
+        - path: /mapper/v1(/|$)(.*)
           pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
@@ -74,29 +74,13 @@ tolerations: []
 
 affinity: {}
 
-schemasConfigmapName: ""
-
 envVars:
-  connectionInfo_uri: 'jdbc:postgresql://{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}:5432/registry'
-  connectionInfo_username: sunbirdrcuser
-  elastic_search_connection_url: 'http://{{ include "elasticsearch.service.name" .Subcharts.elasticsearch }}:9200'
-  elastic_search_auth_enabled: 'false'
-  search_providerName: dev.sunbirdrc.registry.service.ElasticSearchService
-  registry_base_apis_enable: 'false'
-  logging.level.root: INFO
-  authentication_enabled: 'false'
-  webhook_enabled: 'false'
-  manager_type: DefinitionsManager
-  claims_enabled: 'false'
-  signature_enabled: 'false'
-  certificate_enabled: 'false'
-  filestorage_enabled: 'false'
-  async_enabled: 'false'
-  notification_async_enabled: 'false'
-  notification_enabled: 'false'
+  SPAR_G2PCONNECT_MAPPER_DB_HOSTNAME: '{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}'
+  SPAR_G2PCONNECT_MAPPER_DB_USERNAME: "sparuser"
+  SPAR_G2PCONNECT_MAPPER_OPENAPI_ROOT_PATH: "/mapper/v1"
 
 envVarsFrom:
-  connectionInfo_password:
+  SPAR_G2PCONNECT_MAPPER_DB_PASSWORD:
     secretKeyRef:
       name: '{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}'
       key: password
@@ -107,7 +91,7 @@ istio:
     enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
-    prefix: "/registry"
+    prefix: "/mapper/v1/"
     rewriteUri: "/"
   gateway:
     enabled: false
@@ -123,26 +107,10 @@ istio:
 postgresql:
   enabled: true
   auth:
-    username: sunbirdrcuser
-    database: registry
+    username: sparuser
+    database: spardb
   primary:
     extendedConfiguration: |-
       wal_level = logical
       max_wal_senders = 20
       max_replication_slots = 10
-
-elasticsearch:
-  enabled: true
-  image:
-    repository: bitnami/elasticsearch
-    tag: 7.10.2-debian-10-r350
-
-  master:
-    masterOnly: false
-    replicaCount: 1
-  data:
-    replicaCount: 0
-  coordinating:
-    replicaCount: 0
-  ingest:
-    replicaCount: 0
