@@ -7,6 +7,5 @@ appVersion: "v0.1.0"
 dependencies:
 - name: sunbird-rc-core
   version: 0.1.0
-  repository: file://charts/sunbird-rc-core
   alias: registry
   condition: registry.enabled

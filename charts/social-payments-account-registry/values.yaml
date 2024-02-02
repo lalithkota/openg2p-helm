@@ -148,11 +148,11 @@ spar-g2pconnect-id-mapper:
   postgresql:
     enabled: false
   envVars:
-    SPAR_G2PCONNECT_MAPPER_DB_HOSTNAME: '{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}'
+    SPAR_G2PCONNECT_MAPPER_DB_HOSTNAME: spar-postgresql # Change this value acc to name of the helm release.
   envVarsFrom:
     SPAR_G2PCONNECT_MAPPER_DB_PASSWORD:
       secretKeyRef:
-        name: '{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}'
+        name: spar-postgresql # Change this value acc to name of the helm release.
 
 sunbird-rc-g2p-mapper-registry:
   enabled: false
@@ -164,10 +164,35 @@ sunbird-rc-g2p-mapper-registry:
     postgresql:
       enabled: false
     envVars:
-      connectionInfo_uri: 'jdbc:postgresql://{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}:5432/spardb'
+      connectionInfo_uri: 'jdbc:postgresql://spar-postgresql:5432/spardb' # Change this value acc to name of the helm release.
       connectionInfo_username: sparuser
     envVarsFrom:
       connectionInfo_password:
         secretKeyRef:
-          name: '{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}'
+          name: 'spar-postgresql' # Change this value acc to name of the helm release.
           key: password
+
+postgresInit:
+  enabled: true
+  image: jbergknoff/postgresql-client
+  imagePullPolicy: Always
+  restartPolicy: Never
+  envVars:
+    GIT_REPO_URL: 'https://github.com/lalithkota/social-payments-account-registry'
+    GIT_BRANCH: 'develop'
+    DEPLOY_DDL: 'false'
+  envVarsFrom: {}
+  backoffLimit: 1
+  command:
+  - sh
+  - -c
+  - >-
+    sleep 10s;
+    apk --no-cache add bash gettext git;
+    export DB_HOST=$SPAR_CORE_DB_HOSTNAME;
+    export DB_USER=$SPAR_CORE_DB_USERNAME;
+    export DB_USER_PASSWORD=$SPAR_CORE_DB_PASSWORD;
+    git_repo_name="$(basename "$GIT_REPO_URL" .git)";
+    git clone --depth 1 --branch $GIT_BRANCH $GIT_REPO_URL &&
+    cd $git_repo_name/db_scripts &&
+    ./deploy.sh
