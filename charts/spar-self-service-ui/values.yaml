@@ -77,8 +77,7 @@ affinity: {}
 envVars:
   NEXT_PUBLIC_BASE_PATH: "/selfservice"
   NEXT_PUBLIC_BASE_API_PATH: "/spar/v1"
-
-envVarsFrom: {}
+  NEXT_PUBLIC_DEFAULT_GET_FA_RAW: 'true'
 
 envVarsFrom: {}
 

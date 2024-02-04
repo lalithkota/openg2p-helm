@@ -77,8 +77,8 @@ tolerations: []
 affinity: {}
 
 envVars:
-  REGISTRY_URL: "" # leave blank to use default
-  CALLBACK_SERVICE_URL: "" # Leave blank to use default
+  REGISTRY_URL: 'http://{{ include "registry.fullname" .Subcharts.registry }}/'
+  CALLBACK_SERVICE_URL: 'http://{{ include "mapper.fullname" . }}-callback-service/'
 
 envVarsFrom: {}
 
