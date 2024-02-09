@@ -1,3 +1,3 @@
 # Social Payments Account Registry Helm Chart
 
-Refer to [Deployment on Kubernetes](https://docs.openg2p.org/guides/deployment-guide/deployment-on-kubernetes).
+Refer to [SPAR Deployment](https://docs.openg2p.org/deployment/openg2p-modules-deployment/spar-deployment).

@@ -1,3 +1,3 @@
 # OpenG2P Helm Chart
 
-Refer to [Deployment on Kubernetes](https://docs.openg2p.org/guides/deployment-guide/deployment-on-kubernetes).
+Refer to [OpenG2P PBMS deployment instructions](https://docs.openg2p.org/deployment/openg2p-modules-deployment/pbms-deployment)

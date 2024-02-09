@@ -1,0 +1,72 @@
+global:
+  hostname: "openg2p.sandbox.net"
+
+odoo:
+  image:
+    repository: openg2p/openg2p-social-registry-odoo-package
+    tag: "17.0-develop"
+    pullPolicy: Always
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  odooEmail: admin
+
+  postgresql:
+    enabled: false
+    # primary:
+    #   extendedConfiguration: |-
+    #     wal_level = logical
+    #     max_wal_senders = 20
+    #     max_replication_slots = 10
+
+  externalDatabase:
+    host: "postgres-postgresql.postgres"
+    port: 5432
+    user: openg2puser
+    database: openg2pdb
+    create: false
+    postgresqlPostgresUser: "postgres"
+    existingSecret: "postgres-postgresql"
+    existingSecretPasswordKey: "password"
+    existingSecretPostgresPasswordKey: "postgres-password"
+
+  livenessProbe:
+    enabled: false
+
+  extraEnvVars:
+  - name: ODOO_SKIP_MODULES_UPDATE
+    value: "yes"
+  - name: LIMIT_TIME_REAL
+    value: "5000"
+  - name: LIST_DB
+    value: "False"
+  - name: SERVER_WIDE_MODULES
+    value: web,queue_job
+  # not using bitnami smtpHost and smtpPort variables, because they need user and pass as well.
+  - name: OPENG2P_SMTP_HOST
+    value: "openg2p-mail.openg2p"
+  - name: OPENG2P_SMTP_PORT
+    value: "25"
+  - name: LOG_HANDLER
+    value: "[':DEBUG']"
+  - name: LOG_DB
+    value: "True"
+
+istio:
+  enabled: true
+  virtualservice:
+    enabled: true
+    host: ""
+    gateway: "istio-system/all-hosts"
+  gateway:
+    enabled: false
+    host: ""
+    ingressController:
+      istio: ingressgateway
+    httpTlsRedirect: true
+    tls:
+      enabled: true
+      mode: SIMPLE
+      credentialName: ""
