@@ -1,6 +1,6 @@
 apiVersion: v2
 name: openg2p
-description: A Helm chart for OpenG2P Package
+description: A Helm chart for OpenG2P PBMS Package
 type: application
 version: 1.2.0
 appVersion: "1.2.0"
