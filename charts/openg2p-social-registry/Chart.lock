@@ -1,0 +1,6 @@
+dependencies:
+- name: odoo
+  repository: https://charts.bitnami.com/bitnami
+  version: 21.6.5
+digest: sha256:ffd96ae199e3b539f9645efdbc70adb9ee537624df83957074aa40315ae3688a
+generated: "2024-02-10T00:02:47.30473352+05:30"

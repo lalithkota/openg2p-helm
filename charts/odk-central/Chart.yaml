@@ -2,28 +2,23 @@ apiVersion: v2
 name: odk-central
 description: A Helm chart for odk-central.
 type: application
-version: 1.1.0
+version: 1.2.0
 appVersion: "v2023.1.0"
 dependencies: 
   - name: odk-central-mail
-    version: 1.1.0
-    repository: file://charts/odk-mail
+    version: 1.2.0
     condition: odk-central-mail.enabled
   - name: odk-central-pyxform
-    version: 1.1.0
-    repository: file://charts/odk-pyxform
+    version: 1.2.0
     condition: odk-central-pyxform.enabled
   - name: odk-central-enketo
-    version: 1.1.0
-    repository: file://charts/odk-enketo
+    version: 1.2.0
     condition: odk-central-enketo.enabled
   - name: odk-central-backend
-    version: 1.1.0
-    repository: file://charts/odk-backend
+    version: 1.2.0
     condition: odk-central-backend.enabled
   - name: odk-central-frontend
-    version: 1.1.0
-    repository: file://charts/odk-frontend
+    version: 1.2.0
     condition: odk-central-frontend.enabled
 keywords:
   - odk

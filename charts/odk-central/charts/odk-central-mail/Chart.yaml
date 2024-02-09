@@ -2,7 +2,7 @@ apiVersion: v2
 name: odk-central-mail
 description: A Helm chart for odk-central-mail.
 type: application
-version: 1.1.0
+version: 1.2.0
 appVersion: ""
 dependencies:
 - name: common

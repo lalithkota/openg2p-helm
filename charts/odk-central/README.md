@@ -1,3 +1,3 @@
 # ODK Central Helm Chart
 
-Refer to [Deployment on Kubernetes](https://docs.openg2p.org/guides/deployment-guide/deployment-on-kubernetes).
+Refer to [ODK Central deployment instructions](https://docs.openg2p.org/deployment/external-components-setup/odk-central-deployment)
