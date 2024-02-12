@@ -24,8 +24,8 @@ odoo:
   externalDatabase:
     host: "postgres-postgresql.postgres"
     port: 5432
-    user: openg2puser
-    database: openg2pdb
+    user: socialregistryuser
+    database: socialregistrydb
     create: false
     postgresqlPostgresUser: "postgres"
     existingSecret: "postgres-postgresql"
