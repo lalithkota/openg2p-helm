@@ -4,7 +4,7 @@ global:
 odoo:
   image:
     repository: openg2p/openg2p-social-registry-odoo-package
-    tag: "17.0-develop"
+    tag: "17.0-develop-social-registry"
     pullPolicy: Always
 
   service:
