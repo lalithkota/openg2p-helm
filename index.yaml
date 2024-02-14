@@ -3,7 +3,7 @@ entries:
   g2p-cash-transfer-bridge:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-02-12T13:58:41.303749192Z"
+    created: "2024-02-14T12:18:06.344062252Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -14,7 +14,7 @@ entries:
       repository: oci://registry-1.docker.io/bitnamicharts
       version: 18.x.x
     description: A Helm chart for G2P Cash Transfer Bridge
-    digest: d8d88ed3b4e3be552d067cc61112747b46affe64960e43c82eb027936b6e6fe0
+    digest: bd07cac755c9b784fc4c02afff7e70cb892726b45a1fd61762b3e90e7fee820b
     name: g2p-cash-transfer-bridge
     type: application
     urls:
@@ -23,7 +23,7 @@ entries:
   odk-central:
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2024-02-12T13:58:41.319228744Z"
+    created: "2024-02-14T12:18:06.36091707Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -60,7 +60,7 @@ entries:
     version: 1.2.0
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2024-02-12T13:58:41.311462646Z"
+    created: "2024-02-14T12:18:06.352552231Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -98,7 +98,7 @@ entries:
   openg2p:
   - apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-02-12T13:58:41.333002281Z"
+    created: "2024-02-14T12:18:06.373893615Z"
     dependencies:
     - alias: mail
       condition: mail.enabled
@@ -118,7 +118,7 @@ entries:
     version: 1.2.0
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-02-12T13:58:41.326057401Z"
+    created: "2024-02-14T12:18:06.36711552Z"
     dependencies:
     - alias: mail
       condition: mail.enabled
@@ -139,7 +139,7 @@ entries:
   openg2p-social-registry:
   - apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-02-12T13:58:41.33815994Z"
+    created: "2024-02-14T12:18:06.380331321Z"
     dependencies:
     - condition: odoo.enabled
       name: odoo
@@ -155,7 +155,7 @@ entries:
   social-payments-account-registry:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-02-12T13:58:41.368343147Z"
+    created: "2024-02-14T12:18:06.406806262Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -183,7 +183,7 @@ entries:
   spar-g2pconnect-id-mapper:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-02-12T13:58:41.372358297Z"
+    created: "2024-02-14T12:18:06.411104894Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -199,7 +199,7 @@ entries:
   spar-self-service-ui:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-02-12T13:58:41.372734087Z"
+    created: "2024-02-14T12:18:06.41223866Z"
     description: A Helm chart for UI for Self Service Portal for Social Payments Account
       Registry
     digest: 8723ac27062f41d93f17c426856827b2ae0729fca7a4dc2c573c779ab715f65f
@@ -211,7 +211,7 @@ entries:
   sunbird-rc-core:
   - apiVersion: v2
     appVersion: v0.0.14
-    created: "2024-02-12T13:58:41.383585694Z"
+    created: "2024-02-14T12:18:06.424346026Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -231,7 +231,7 @@ entries:
   sunbird-rc-g2p-mapper-registry:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2024-02-12T13:58:41.394622804Z"
+    created: "2024-02-14T12:18:06.435714035Z"
     dependencies:
     - alias: registry
       condition: registry.enabled
@@ -245,4 +245,4 @@ entries:
     urls:
     - https://openg2p.github.io/openg2p-helm/sunbird-rc-g2p-mapper-registry-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-12T13:58:41.29462809Z"
+generated: "2024-02-14T12:18:06.334025805Z"
