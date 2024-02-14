@@ -79,7 +79,7 @@ envVars:
   GCTB_CORE_DB_USERNAME: "gctbuser"
   GCTB_CORE_OPENAPI_ROOT_PATH: "/g2pCashTransferBridge/v1"
   GCTB_ID_TRANSLATE_MAPPER_API_TIMEOUT_SECS: "1"
-  GCTB_ID_TRANSLATE_MAPPER_RESOLVE_URL: "http://mapper.spar/v0.1.0/mapper/resolve" # Change to the url according to ID Mapper provider
+  GCTB_ID_TRANSLATE_MAPPER_RESOLVE_URL: "http://mapper.spar/mapper/resolve" # Change to the url according to ID Mapper provider
   GCTB_ID_TRANSLATE_MAPPER_RESOLVE_SENDER_URL: 'http://{{ include "gctb.fullname" . }}.{{ .Release.Namespace }}/internal/callback/mapper'
   GCTB_ID_TRANSLATE_QUEUE_REDIS_HOST: '{{ include "common.names.fullname" .Subcharts.redis }}-master'
 
