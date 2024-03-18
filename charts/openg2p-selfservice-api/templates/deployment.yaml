@@ -33,7 +33,7 @@ spec:
           command:
           - 'sh'
           - '-c'
-          - 'until pg_isready -U $portal_CORE_DB_USERNAME -h $portal_CORE_DB_HOSTNAME -p ${portal_CORE_DB_PORT:-5432} -d ${portal_CORE_DB_DBNAME:-portaldb}; do sleep 3; done'
+          - 'until pg_isready -U $PORTAL_DB_USERNAME -h $PORTAL_DB_HOSTNAME -p ${PORTAL_DB_PORT:-5432} -d ${PORTAL_DB_DBNAME:-openg2p}; do sleep 3; done'
           env: {{ include "portal.envVars" . | nindent 10 }}
       containers:
         - name: {{ .Chart.Name }}

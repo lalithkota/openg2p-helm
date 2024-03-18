@@ -22,7 +22,7 @@ spec:
   http:
   - match:
     - uri:
-        prefix: {{ .Values.istio.virtualservice.prefix }}
+        {{- toYaml .Values.istio.virtualservice.uri | nindent 8 }}
     {{- if .Values.istio.virtualservice.rewriteUri }}
     rewrite:
       uri: {{ .Values.istio.virtualservice.rewriteUri }}
@@ -32,12 +32,5 @@ spec:
         host: {{ include "portal.fullname" . }}
         port:
           number: {{ .Values.service.port }}
-  {{- if .Values.istio.virtualservice.redirectToSelfServiceEnabled }}
-  - match:
-    - uri:
-        prefix: "/"
-    redirect:
-      uri: "/selfservice"
-  {{- end }}
 {{- end }}
 {{- end }}

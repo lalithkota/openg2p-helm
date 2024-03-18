@@ -3,7 +3,7 @@ global:
 
 replicaCount: 1
 image:
-  repository: openg2p/openg2p-self-service-portal-api
+  repository: openg2p/openg2p-selfservice-api
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "develop"
@@ -93,7 +93,8 @@ istio:
     enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
-    prefix: "/selfservice/v1/"
+    uri:
+      prefix: "/selfservice/v1/"
     rewriteUri: "/"
   gateway:
     enabled: false
