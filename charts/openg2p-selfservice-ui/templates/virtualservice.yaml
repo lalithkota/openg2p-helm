@@ -20,6 +20,24 @@ spec:
     - {{ .Values.istio.virtualservice.gateway }}
     {{- end }}
   http:
+  {{- if .Values.istio.virtualservice.apiPrefix }}
+  - match:
+    - uri:
+        prefix: {{ .Values.istio.virtualservice.apiPrefix }}
+    {{- if .Values.istio.virtualservice.apiRewriteUri }}
+    rewrite:
+      uri: {{ .Values.istio.virtualservice.apiRewriteUri }}
+    {{- end }}
+    route:
+    - destination:
+        {{- if .Values.istio.virtualservice.apiServicePath }}
+        host: {{ .Values.istio.virtualservice.apiServicePath }}
+        {{- else }}
+        host: {{ include "portal.fullname" . | replace "ui" "api" }}
+        {{- end }}
+        port:
+          number: {{ .Values.service.port }}
+  {{- end }}
   - match:
     - uri:
         {{- toYaml .Values.istio.virtualservice.uri | nindent 8 }}

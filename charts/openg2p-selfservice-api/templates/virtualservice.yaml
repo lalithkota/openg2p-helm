@@ -22,7 +22,7 @@ spec:
   http:
   - match:
     - uri:
-        {{- toYaml .Values.istio.virtualservice.uri | nindent 8 }}
+        prefix: {{ .Values.istio.virtualservice.prefix }}
     {{- if .Values.istio.virtualservice.rewriteUri }}
     rewrite:
       uri: {{ .Values.istio.virtualservice.rewriteUri }}
