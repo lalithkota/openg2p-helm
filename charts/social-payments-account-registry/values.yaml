@@ -178,7 +178,7 @@ postgresInit:
   imagePullPolicy: Always
   restartPolicy: Never
   envVars:
-    GIT_REPO_URL: 'https://github.com/lalithkota/social-payments-account-registry'
+    GIT_REPO_URL: 'https://github.com/openg2p/social-payments-account-registry'
     GIT_BRANCH: 'develop'
     DEPLOY_DDL: 'false'
   envVarsFrom: {}
