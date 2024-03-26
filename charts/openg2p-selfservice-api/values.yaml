@@ -88,14 +88,13 @@ envVarsFrom:
       key: password
 
 istio:
-  enabled: true
+  enabled: false
   virtualservice:
     enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
-    uri:
-      prefix: "/selfservice/v1/"
-    rewriteUri: "/"
+    prefix: /selfservice/v1/
+    rewriteUri: /
   gateway:
     enabled: false
     host: ""

@@ -87,8 +87,9 @@ istio:
     enabled: true
     host: ""
     gateway: "istio-system/all-hosts"
-    uri:
-      regex: '^\/selfservice(?:\/v1)'
+    prefix: /selfservice
+    apiPrefix: /selfservice/v1/
+    apiRewriteUri: /
     redirectToSelfServiceEnabled: true
   gateway:
     enabled: false
