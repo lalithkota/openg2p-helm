@@ -8,11 +8,7 @@ metadata:
     {{- include "openg2p.labels" . | nindent 4 }}
 spec:
   hosts:
-  {{- if .Values.istio.virtualservice.host }}
-  - {{ .Values.istio.virtualservice.host }}
-  {{- else }}
-  - {{ .Values.global.hostname }}
-  {{- end }}
+  - {{ include "openg2p.adminHostname" . }}
   gateways:
     {{- if not .Values.istio.virtualservice.gateway }}
     - {{ include "openg2p.fullname" . }}
@@ -30,24 +26,19 @@ spec:
         prefix: /selfservice
     redirect:
       uri: /selfservice
-      authority:
-        {{- if .Values.selfServiceIngress.istio.virtualservice.host }}
-        {{ .Values.selfServiceIngress.istio.virtualservice.host }}
-        {{- else }}
-        {{ .Values.global.selfServiceHostname }}
-        {{- end }}
+      authority: {{ include "openg2p.selfServiceHostname" . }}
   - match:
     - uri:
         prefix: /serviceprovider
     redirect:
       uri: /serviceprovider
-      authority:
-        {{- if .Values.serviceProviderIngress.istio.virtualservice.host }}
-        {{ .Values.serviceProviderIngress.istio.virtualservice.host }}
-        {{- else }}
-        {{ .Values.global.serviceProviderHostname }}
-        {{- end }}
-  - route:
+      authority: {{ include "openg2p.serviceProviderHostname" . }}
+  - headers:
+      request:
+        set:
+          x-forwarded-host: {{ include "openg2p.adminHostname" . }}
+          x-forwarded-proto: https
+    route:
     - destination:
         host: {{ include "openg2p.fullname" . }}-odoo
         port:

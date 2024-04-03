@@ -8,11 +8,7 @@ metadata:
     {{- include "socialRegistry.labels" . | nindent 4 }}
 spec:
   hosts:
-  {{- if .Values.istio.virtualservice.host }}
-  - {{ .Values.istio.virtualservice.host }}
-  {{- else }}
-  - {{ .Values.global.hostname }}
-  {{- end }}
+  - {{ include "socialRegistry.hostname" . }}
   gateways:
     {{- if not .Values.istio.virtualservice.gateway }}
     - {{ include "socialRegistry.fullname" . }}
@@ -25,7 +21,12 @@ spec:
         exact: /
     redirect:
       uri: /web
-  - route:
+  - headers:
+      request:
+        set:
+          x-forwarded-host: {{ include "socialRegistry.hostname" . }}
+          x-forwarded-proto: https
+    route:
     - destination:
         host: {{ include "socialRegistry.fullname" . }}-odoo
         port:

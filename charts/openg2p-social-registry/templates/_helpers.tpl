@@ -49,3 +49,16 @@ Selector labels
 app.kubernetes.io/name: {{ include "socialRegistry.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/* All hostnames */}}
+
+{{/* TODO: perform check here if ingress/istio */}}
+{{- define "socialRegistry.hostname" -}}
+{{- if .Values.istio.virtualservice.host -}}
+{{ .Values.istio.virtualservice.host }}
+{{- else -}}
+{{ .Values.global.hostname }}
+{{- end -}}
+{{- end -}}
+
+{{/* End - All hostnames */}}
