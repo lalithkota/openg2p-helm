@@ -1,5 +1,5 @@
 apiVersion: v2
-name: G2P Bridge
+name: g2p-bridge
 description: A Helm chart for OpenG2P G2P Bridge
 type: application
 version: 0.1.0
