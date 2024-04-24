@@ -1,5 +1,5 @@
 apiVersion: v2
-name: OpenG2P Social Registry
+name: openg2p-social-registry
 description: A Helm chart for OpenG2P Social Registry
 type: application
 version: 1.2.0
