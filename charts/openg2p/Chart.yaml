@@ -1,5 +1,5 @@
 apiVersion: v2
-name: openg2p
+name: OpenG2P PBMS
 description: A Helm chart for OpenG2P PBMS Package
 type: application
 version: 1.2.0
@@ -13,3 +13,4 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   version: 21.6.5
   condition: odoo.enabled
+icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
