@@ -3,10 +3,8 @@ entries:
   spar:
   - annotations:
       catalog.cattle.io/display-name: OpenG2P SPAR
-      openg2p.org/rancher-app: "true"
     apiVersion: v2
-    appVersion: 1.0.0
-    created: "2024-04-28T11:53:32.658805185+05:30"
+    created: "2024-05-02T00:34:16.138650461+05:30"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -25,11 +23,11 @@ entries:
       repository: ""
       version: 1.0.0
     description: A Helm chart for OpenG2P SPAR
-    digest: a49dfa24d466821cdaf5d7989634332d4d4c1e6b9f76a58df5af4299020f41f6
+    digest: 1fcda326b5019a24dd8cb92857bf1d92629ef5ab55b4abac2ec61927ee743c32
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: spar
     type: application
     urls:
     - https://openg2p.github.io/openg2p-helm/spar-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-28T11:53:32.635680962+05:30"
+generated: "2024-05-02T00:34:16.116415117+05:30"
