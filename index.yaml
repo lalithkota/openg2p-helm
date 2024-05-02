@@ -3,7 +3,7 @@ entries:
   g2p-bridge:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-02T16:45:23.216906111Z"
+    created: "2024-05-02T17:23:16.946198907Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -24,7 +24,7 @@ entries:
   odk-central:
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2024-05-02T16:45:23.233380143Z"
+    created: "2024-05-02T17:23:16.96201934Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -61,7 +61,7 @@ entries:
     version: 1.2.0
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2024-05-02T16:45:23.225026052Z"
+    created: "2024-05-02T17:23:16.954116128Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -99,7 +99,7 @@ entries:
   openg2p:
   - apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-05-02T16:45:23.247491397Z"
+    created: "2024-05-02T17:23:16.975581241Z"
     dependencies:
     - alias: mail
       condition: mail.enabled
@@ -120,7 +120,7 @@ entries:
     version: 1.2.0
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-05-02T16:45:23.240268624Z"
+    created: "2024-05-02T17:23:16.968831584Z"
     dependencies:
     - alias: mail
       condition: mail.enabled
@@ -141,7 +141,7 @@ entries:
   openg2p-selfservice-api:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-02T16:45:23.247905894Z"
+    created: "2024-05-02T17:23:16.975991308Z"
     description: A Helm chart for API backend of OpenG2P Self Service Portal
     digest: 4b57b09ca20c5bc2f752bed831f90381ec5c13b55195f05de09304231c19cc0b
     name: openg2p-selfservice-api
@@ -152,7 +152,7 @@ entries:
   openg2p-selfservice-ui:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-02T16:45:23.248286978Z"
+    created: "2024-05-02T17:23:16.976368183Z"
     description: A Helm chart for UI frontend of OpenG2P Self Service Portal
     digest: 982b05635beebc494f708f86b21fdcf5d1cf6c3494c50a9e97481f6b0209fa51
     name: openg2p-selfservice-ui
@@ -166,7 +166,7 @@ entries:
       catalog.cattle.io/os: linux
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-05-02T16:45:23.253534649Z"
+    created: "2024-05-02T17:23:16.981547368Z"
     dependencies:
     - condition: odoo.enabled
       name: odoo
@@ -183,7 +183,7 @@ entries:
   social-payments-account-registry:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-02T16:45:23.27890263Z"
+    created: "2024-05-02T17:23:17.007850188Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -212,7 +212,7 @@ entries:
   - annotations:
       catalog.cattle.io/display-name: OpenG2P SPAR
     apiVersion: v2
-    created: "2024-05-02T16:45:23.307171548Z"
+    created: "2024-05-02T17:23:17.035029821Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -231,7 +231,7 @@ entries:
       repository: ""
       version: 1.0.0
     description: A Helm chart for OpenG2P SPAR
-    digest: 72398209162a9a7d22e2d786c864cce492813c5b0a79f295dd9984c3238bef88
+    digest: 2642f62d06fd3d57dc51e042d9a3307c06b6239190778c201b7ca4926b3ea4f8
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: spar
     type: application
@@ -241,7 +241,7 @@ entries:
   - annotations:
       catalog.cattle.io/display-name: OpenG2P SPAR
     apiVersion: v2
-    created: "2024-05-02T16:45:23.292505018Z"
+    created: "2024-05-02T17:23:17.020872906Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -270,7 +270,7 @@ entries:
   spar-g2pconnect-id-mapper:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-02T16:45:23.311255299Z"
+    created: "2024-05-02T17:23:17.03898256Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -285,14 +285,14 @@ entries:
     version: 0.1.0
   spar-mapper-api:
   - apiVersion: v2
-    created: "2024-05-02T16:45:23.316311204Z"
+    created: "2024-05-02T17:23:17.043103804Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: oci://registry-1.docker.io/bitnamicharts
       version: 13.x.x
     description: A Helm chart for OpenG2P SPAR Mapper API
-    digest: bc1341a72144bca6b8af568535b3327e6388c717ed99561a7dcdf8786b2bc563
+    digest: 3a94d62ffb1ec1045139b01b35e5ed8f054ff3976aa09b9a1ffabb3c88f1c499
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: spar-mapper-api
     type: application
@@ -301,14 +301,14 @@ entries:
     version: 1.0.0
   spar-self-service-api:
   - apiVersion: v2
-    created: "2024-05-02T16:45:23.321572513Z"
+    created: "2024-05-02T17:23:17.04796838Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: oci://registry-1.docker.io/bitnamicharts
       version: 13.x.x
     description: A Helm chart for OpenG2P SPAR Self Service API
-    digest: 6113e506d7312cab85c8d25c24608a72180d88f2190a1680222dabbaaaa61f5f
+    digest: 631e3bf6f52a75439f740d36565d30776165328b9004b1a03ee379d7caee2740
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: spar-self-service-api
     type: application
@@ -317,9 +317,9 @@ entries:
     version: 1.0.0
   spar-self-service-ui:
   - apiVersion: v2
-    created: "2024-05-02T16:45:23.322475465Z"
+    created: "2024-05-02T17:23:17.048806258Z"
     description: A Helm chart for OpenG2P SPAR Self Service UI
-    digest: 081158600086a9860fd3d8273f83ec62dea05ecfb9b4e9513b398600e56b5037
+    digest: 6058b5d5b91ff1057743e5bc420f6b9d9bf335fb23ed346c6f21c5740837e721
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: spar-self-service-ui
     type: application
@@ -328,7 +328,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-02T16:45:23.321992029Z"
+    created: "2024-05-02T17:23:17.048343322Z"
     description: A Helm chart for UI for Self Service Portal for Social Payments Account
       Registry
     digest: e7ae4c157b5b5f51274ddfea491337cede168d06e26d2ffdfbc23869e8ff5d81
@@ -340,7 +340,7 @@ entries:
   sunbird-rc-core:
   - apiVersion: v2
     appVersion: v0.0.14
-    created: "2024-05-02T16:45:23.333026536Z"
+    created: "2024-05-02T17:23:17.06006469Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -360,7 +360,7 @@ entries:
   sunbird-rc-g2p-mapper-registry:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2024-05-02T16:45:23.344707887Z"
+    created: "2024-05-02T17:23:17.071025522Z"
     dependencies:
     - alias: registry
       condition: registry.enabled
@@ -374,4 +374,4 @@ entries:
     urls:
     - https://openg2p.github.io/openg2p-helm/sunbird-rc-g2p-mapper-registry-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-02T16:45:23.207817286Z"
+generated: "2024-05-02T17:23:16.936988248Z"
