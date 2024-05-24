@@ -1,24 +1,32 @@
 global:
+  # hostname name of installation
+  # hostname: "odk.example.com"
   hostname: "odk.openg2p.sandbox.net"
+  # https port of installation
+  httpsPort: 443
+  # mail name
   mailname: "openg2p.sandbox.net"
-  httpsPort: "443"
+  # system admin email
+  # sysAdminEmail: "admin@example.com"
   sysAdminEmail: "admin@odk.openg2p.sandbox.net"
+  # Support email
+  # supportEmail: "support@example.com"
+  supportEmail: "support@odk.openg2p.sandbox.net"
 
 odk-central-mail:
   enabled: true
-  fullnameOverride: mail
 odk-central-pyxform:
   enabled: true
-  fullnameOverride: pyxform
+  nameOverride: pyxform
 odk-central-enketo:
   enabled: true
-  fullnameOverride: enketo
+  nameOverride: enketo
 odk-central-backend:
   enabled: true
-  fullnameOverride: service
+  nameOverride: backend
 odk-central-frontend:
   enabled: true
-  fullnameOverride: nginx
+  nameOverride: frontend
 
 ingress:
   enabled: false
@@ -38,7 +46,7 @@ istio:
   virtualservice:
     enabled: true
     host: ""
-    gateway: "istio-system/all-hosts"
+    gateway: "internal"
     destination: "nginx"
     destinationPort: "80"
   gateway:

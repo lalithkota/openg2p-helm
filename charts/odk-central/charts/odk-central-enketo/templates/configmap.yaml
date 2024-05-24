@@ -3,8 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "common.names.fullname" . }}
 data:
-  {{- $files := .Files }}
-  {{- range tuple "config.json.template" }}
-  {{ . }}: |-
-      {{ $files.Get . | nindent 6 }}
-  {{- end }}
+  config.json.template: |-
+    {{- tpl .Values.configJsonTemplate $ | nindent 4 }}
+  start-enketo.sh: |-
+    {{- tpl .Values.startEnketoScript $ | nindent 4 }}

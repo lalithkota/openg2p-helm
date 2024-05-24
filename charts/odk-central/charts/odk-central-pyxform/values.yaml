@@ -65,8 +65,6 @@ podSecurityContext:
   enabled: false
   fsGroup: 1001
 
-extraEnvVars: []
+envVars: {}
 
-extraEnvVarsCM: []
-
-extraEnvVarsSecret: []
+envVarsFrom: {}

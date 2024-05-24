@@ -6,10 +6,8 @@ version: 1.2.0
 appVersion: ""
 dependencies:
 - name: common
-  repository: https://charts.bitnami.com/bitnami
-  tags:
-   - bitnami-common
-  version: 1.x.x
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 2.x.x
 keywords:
   - odk
   - odk-central

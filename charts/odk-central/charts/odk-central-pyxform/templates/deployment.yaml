@@ -31,22 +31,7 @@ spec:
           args: {{- include "common.tplvalues.render" (dict "value" .Values.args "context" $) | nindent 12 }}
           {{- end }}
           env:
-            {{- if .Values.extraEnvVars }}
-            {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}
-          envFrom:
-            {{- if .Values.extraEnvVarsCM }}
-            {{- range .Values.extraEnvVarsCM }}
-            - configMapRef:
-                name: {{ . }}
-            {{- end }}
-            {{- end }}
-            {{- if .Values.extraEnvVarsSecret }}
-            {{- range .Values.extraEnvVarsSecret }}
-            - secretRef:
-                name: {{ . }}
-            {{- end }}
-            {{- end }}
+            {{ include "odkPyxform.envVars" . | nindent 12 }}
           ports:
           - name: container-port
             containerPort: {{ .Values.containerPort }}

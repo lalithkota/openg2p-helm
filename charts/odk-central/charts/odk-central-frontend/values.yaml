@@ -1,3 +1,7 @@
+global:
+  hostname: ""
+  httpsPort: 443
+
 replicaCount: 1
 
 service:
@@ -65,12 +69,76 @@ podSecurityContext:
   enabled: false
   fsGroup: 1001
 
-extraEnvVars: []
+envVars:
+  # Donot change the following. For now.
+  SSL_TYPE: upstream
+  DOMAIN: "_"
+  ENKETO_URL: '{{ include "common.names.fullname" . }}-enketo'
+  BACKEND_URL: '{{ include "common.names.fullname" . }}-backend'
 
-extraEnvVarsCM: []
+odkSetupScript: |-
+  #!/bin/bash
+  /bin/bash -c "envsubst < /usr/share/nginx/odk.conf.template > /etc/nginx/conf.d/odk.conf"
+  echo "starting nginx without local SSL to allow for upstream SSL.."
+  nginx -g "daemon off;"
 
-extraEnvVarsSecret: []
+odkConfTemplate: |-
+  server {
+    listen 80;
 
-# Donot change the following. For now.
-sslType: upstream
-nginxDomain: "_"
+    server_tokens off;
+
+    include /usr/share/nginx/common-headers.nginx.conf;
+
+    client_max_body_size 100m;
+
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1280;
+    gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/x-javascript text/xml text/csv;
+
+    location /- {
+      proxy_pass http://${ENKETO_URL}:8005/-;
+      proxy_redirect off;
+      proxy_set_header Host $host;
+
+      add_header Referrer-Policy same-origin;
+      add_header Strict-Transport-Security "max-age=63072000" always;
+      add_header X-Frame-Options "SAMEORIGIN";
+      add_header X-Content-Type-Options nosniff;
+    }
+
+    location ~ ^/v\d {
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_pass http://${BACKEND_URL}:8383;
+      proxy_redirect off;
+
+      # set up request-body gzip decompression:
+      set $max_chunk_size 16384;    # ~16KB
+      set $max_body_size 134217728; # ~128MB
+      rewrite_by_lua_file inflate_body.lua;
+
+      # buffer requests, but not responses, so streaming out works.
+      proxy_request_buffering on;
+      proxy_buffering off;
+      proxy_read_timeout 2m;
+    }
+
+    location / {
+      root /usr/share/nginx/html;
+
+      location /version.txt {
+        include /usr/share/nginx/common-headers.nginx.conf;
+        add_header Cache-Control no-cache;
+      }
+      location /index.html {
+        include /usr/share/nginx/common-headers.nginx.conf;
+        add_header Cache-Control no-cache;
+      }
+    }
+
+    location /csp-report {
+      proxy_pass https://o130137.ingest.sentry.io/api/1298632/security/?sentry_key=3cf75f54983e473da6bd07daddf0d2ee;
+    }
+  }

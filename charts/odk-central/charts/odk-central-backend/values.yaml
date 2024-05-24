@@ -1,3 +1,10 @@
+global:
+  hostname: ""
+  httpsPort: 443
+  mainname: ""
+  sysAdminEmail: ""
+  supportEmail: ""
+
 replicaCount: 1
 
 service:
@@ -62,41 +69,121 @@ podSecurityContext:
   enabled: false
   fsGroup: 1001
 
-extraEnvVars: []
+envVars:
+  DOMAIN: '{{ .Values.global.hostname }}'
+  SYSADMIN_EMAIL: '{{ .Values.global.sysAdminEmail }}'
+  HTTPS_PORT: '{{ .Values.global.httpsPort | quote }}'
 
-extraEnvVarsCM: []
+  ENKETO_HOST: '{{ .Release.Name }}-enketo'
+  ENKETO_PORT: "8005"
 
-extraEnvVarsSecret: []
+  PYXFORM_HOST: '{{ .Release.Name }}-pyxform'
+  PYXFORM_PORT: "80"
+
+  MAIL_HOST: '{{ .Release.Name }}-mail'
+  MAIL_PORT: "25"
+
+  POSTGRES_HOSTNAME: '{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}'
+  POSTGRES_USERNAME: '{{ .Values.postgresql.auth.username }}'
+  POSTGRES_DATABASE: '{{ .Values.postgresql.auth.database }}'
+
+envVarsFrom:
+  POSTGRES_PASSWORD:
+    secretKeyRef:
+      name: '{{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql }}'
+      key: password
+  ENKETO_API_KEY:
+    secretKeyRef:
+      name: '{{ .Release.Name }}-enketo'
+      key: enketo-api-key
 
 postgresql:
   # any other postgres helm chart configuration here
-  enabled: false
-  fullnameOverride: postgres
+  enabled: true
   auth:
-    username: odk
-    password: odk
-    database: odk
-  architecture: standalone
+    username: odkuser
+    database: odkdb
+  primary:
+    extendedConfiguration: |-
+      wal_level = logical
+      max_wal_senders = 20
+      max_replication_slots = 10
 
-externalDatabase:
-  hostname: "postgres-postgresql.postgres"
-  database: "odkdb"
-  username: "odkuser"
-  existingSecret: "postgres-postgresql"
-  existingSecretPasswordKey: "password"
+configJsonTemplate: |-
+  {
+    "default": {
+      "database": {
+        "host": "${POSTGRES_HOSTNAME}",
+        "user": "${POSTGRES_USERNAME}",
+        "password": "${POSTGRES_PASSWORD}",
+        "database": "${POSTGRES_DATABASE}"
+      },
+      "email": {
+        "serviceAccount": "${SYSADMIN_EMAIL}",
+        "transport": "smtp",
+        "transportOpts": {
+          "host": "${MAIL_HOST}",
+          "port": ${MAIL_PORT}
+        }
+      },
+      "xlsform": {
+        "host": "${PYXFORM_HOST}",
+        "port": ${PYXFORM_PORT}
+      },
+      "enketo": {
+        "url": "http://${ENKETO_HOST}:${ENKETO_PORT}/-",
+        "apiKey": "${ENKETO_API_KEY}"
+      },
+      "env": {
+        "domain": "https://${DOMAIN}:${HTTPS_PORT}",
+        "sysadminAccount": "${SYSADMIN_EMAIL}"
+      },
+      "external": {
+        "sentry": {
+          "orgSubdomain": "o130137",
+          "key": "3cf75f54983e473da6bd07daddf0d2ee",
+          "project": "1298632"
+        }
+      }
+    }
+  }
 
+startOdkScript: |-
+  #!/usr/bin/env bash
 
-# domain name of installation
-# domain: "example.com"
-domain: ""
-# https port of installation
-# httpsPort: "443"
-httpsPort: ""
-# system admin email
-# sysAdminEmail: "admin@example.com"
-sysAdminEmail: ""
-# Enketo Url
-enketo:
-  apiKeySecret:
-    name: "enketo"
-    key: "enketo-api-key"
+  # This file is taken from https://github.com/getodk/central/tree/v2023.1.0/files/service/scripts
+  # And modified the config template generation line.
+
+  CONFIG_PATH=/usr/odk/config/local.json
+  echo "generating local service configuration.."
+  /bin/bash -c "envsubst < /usr/share/odk/config.json.template > $CONFIG_PATH"
+
+  export SENTRY_RELEASE="$(cat sentry-versions/server)"
+  export SENTRY_TAGS="{ \"version.central\": \"$(cat sentry-versions/central)\", \"version.client\": \"$(cat sentry-versions/client)\" }"
+
+  echo "running migrations.."
+  node ./lib/bin/run-migrations
+
+  echo "checking migration success.."
+  node ./lib/bin/check-migrations
+
+  if [ $? -eq 1 ]; then
+    echo "*** Error starting ODK! ***"
+    echo "After attempting to automatically migrate the database, we have detected unapplied migrations, which suggests a problem with the database migration step. Please look in the console above this message for any errors and post what you find in the forum: https://forum.getodk.org/"
+    exit 1
+  fi
+
+  echo "starting cron.."
+  cron -f &
+
+  MEMTOT=$(vmstat -s | grep "total memory" | awk "{ print $1 }")
+  if [ "$MEMTOT" -gt "1100000" ]
+  then
+    WORKER_COUNT=4
+  else
+    WORKER_COUNT=1
+  fi
+  echo "using $WORKER_COUNT worker(s) based on available memory ($MEMTOT).."
+
+  echo "starting server."
+  pm2-runtime ./pm2.config.js

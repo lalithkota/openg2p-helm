@@ -1,5 +1,5 @@
 dependencies:
-- name: odk-central-mail
+- name: mail
   repository: ""
   version: 1.2.0
 - name: odk-central-pyxform
@@ -14,5 +14,5 @@ dependencies:
 - name: odk-central-frontend
   repository: ""
   version: 1.2.0
-digest: sha256:16c0eedfa54001c4fdb86869d87f0bd97b2876021bc6808aec7d00ec54b8211c
-generated: "2024-02-09T18:06:14.498165357+05:30"
+digest: sha256:3e1138d418e7b264a2e4a77d8ad17027afc86da1993bf966ab121aeda8964d16
+generated: "2024-05-24T20:53:24.492787689+05:30"
