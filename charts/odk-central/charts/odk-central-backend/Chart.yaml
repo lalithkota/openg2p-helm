@@ -2,7 +2,7 @@ apiVersion: v2
 name: odk-central-backend
 description: A Helm chart for odk-central-backend.
 type: application
-version: 1.2.0
+version: "v2024.1.0"
 appVersion: ""
 dependencies:
 - name: common

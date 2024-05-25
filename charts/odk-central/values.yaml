@@ -2,8 +2,6 @@ global:
   # hostname name of installation
   # hostname: "odk.example.com"
   hostname: "odk.openg2p.sandbox.net"
-  # https port of installation
-  httpsPort: 443
   # mail name
   mailname: "openg2p.sandbox.net"
   # system admin email
@@ -32,6 +30,7 @@ ingress:
   enabled: false
   ingressClassName: ""
   pathType: ImplementationSpecific
+  pathBackend: "{{ include "common.names.fullname" . }}-frontend"
   apiVersion: ""
   hostname: ""
   annotations: {}
@@ -47,7 +46,7 @@ istio:
     enabled: true
     host: ""
     gateway: "internal"
-    destination: "nginx"
+    destination: '{{ include "common.names.fullname" . }}-frontend'
     destinationPort: "80"
   gateway:
     enabled: false
@@ -61,7 +60,7 @@ istio:
       credentialName: ""
 
 postgresIngress:
-  enabled: true
+  enabled: false
   type: istio # Define for type ingress
   # host not need. Because tcp.
   istioControllerLabel:

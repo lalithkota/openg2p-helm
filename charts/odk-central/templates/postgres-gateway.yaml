@@ -3,9 +3,9 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: odk-central-postgres
+  name: {{ include "common.names.fullname" . }}-postgresql
   labels:
-    app.kubernetes.io/name: odk-central
+    app.kubernetes.io/name: {{ include "common.names.fullname" . }}
 spec:
   selector:
     {{ toYaml .Values.postgresIngress.istioControllerLabel | nindent 4 }}

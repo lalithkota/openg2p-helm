@@ -1,6 +1,5 @@
 global:
   hostname: ""
-  httpsPort: 443
   mainname: ""
   sysAdminEmail: ""
   supportEmail: ""
@@ -14,7 +13,7 @@ service:
 image:
   registry: docker.io
   repository: openg2p/odk-central-enketo
-  tag: v2023.1.0
+  tag: v2024.1.0
   pullPolicy: Always
 
 containerPort: 8005
@@ -72,7 +71,6 @@ podSecurityContext:
 envVars:
   DOMAIN: '{{ .Values.global.hostname }}'
   SUPPORT_EMAIL: '{{ .Values.global.supportEmail }}'
-  HTTPS_PORT: '{{ .Values.global.httpsPort }}'
   ENKETO_PORT: "8005"
   REDIS_MAIN_HOST: '{{ include "common.names.fullname" . }}-redis-main'
   REDIS_CACHE_HOST: '{{ include "common.names.fullname" . }}-redis-cache'
@@ -93,8 +91,8 @@ envVarsFrom:
 redis:
   main:
     enabled: true
-    image: redis:5
-    imagePullPolicy: Always
+    image: redis:7.2
+    imagePullPolicy: IfNotPreset
     replicaCount: 1
     confMountPath: /usr/local/etc/redis/mnt
     command:
@@ -106,8 +104,8 @@ redis:
       port: 6379
   cache:
     enabled: true
-    image: redis:5
-    imagePullPolicy: Always
+    image: redis:7.2
+    imagePullPolicy: IfNotPreset
     replicaCount: 1
     confMountPath: /usr/local/etc/redis/mnt
     command:
@@ -122,11 +120,12 @@ startEnketoScript: |-
   #!/bin/sh
 
   CONFIG_PATH=${ENKETO_SRC_DIR}/config/config.json
-  echo "generating enketo configuration.."
-  /bin/bash -c "envsubst < ${CONFIG_PATH}.template > $CONFIG_PATH"
+  echo "generating enketo configuration..."
 
-  echo "starting pm2/enketo.."
-  pm2 start --no-daemon app.js -n enketo
+  envsubst < "$CONFIG_PATH.template" > "$CONFIG_PATH"
+
+  echo "starting enketo..."
+  exec yarn workspace enketo-express start
 
 configJsonTemplate: |-
   {
@@ -139,7 +138,7 @@ configJsonTemplate: |-
         "api key": "${ENKETO_API_KEY}",
         "authentication": {
           "type": "cookie",
-          "url": "https://${DOMAIN}:${HTTPS_PORT}/#/login?next={RETURNURL}"
+          "url": "https://${DOMAIN}/#/login?next={RETURNURL}"
         },
         "name": "ODK Central",
         "server url": "${DOMAIN}"

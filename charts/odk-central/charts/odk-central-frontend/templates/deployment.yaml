@@ -49,11 +49,11 @@ spec:
           {{- end }}
           volumeMounts:
           - name: odk-conf-template
-            mountPath: /usr/share/nginx/odk.conf.template
+            mountPath: /usr/share/odk/nginx/odk.conf.template
             subPath: odk.conf.template
           - name: start-nginx-command
-            mountPath: /scripts/odk-setup.sh
-            subPath: odk-setup.sh
+            mountPath: /scripts/setup-odk.sh
+            subPath: setup-odk.sh
       volumes:
       - name: start-nginx-command
         configMap:

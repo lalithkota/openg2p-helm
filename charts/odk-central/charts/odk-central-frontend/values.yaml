@@ -1,6 +1,5 @@
 global:
   hostname: ""
-  httpsPort: 443
 
 replicaCount: 1
 
@@ -11,7 +10,7 @@ service:
 image:
   registry: docker.io
   repository: openg2p/odk-central-frontend
-  tag: v2023.1.0
+  tag: v2024.1.0-oidc
   pullPolicy: Always
 
 containerPort: 80
@@ -76,11 +75,16 @@ envVars:
   ENKETO_URL: '{{ include "common.names.fullname" . }}-enketo'
   BACKEND_URL: '{{ include "common.names.fullname" . }}-backend'
 
-odkSetupScript: |-
+  SENTRY_ORG_SUBDOMAIN: "o130137"
+  SENTRY_KEY: "3cf75f54983e473da6bd07daddf0d2ee"
+  SENTRY_PROJECT: "1298632"
+
+setupOdkScript: |-
   #!/bin/bash
-  /bin/bash -c "envsubst < /usr/share/nginx/odk.conf.template > /etc/nginx/conf.d/odk.conf"
-  echo "starting nginx without local SSL to allow for upstream SSL.."
-  nginx -g "daemon off;"
+  echo "writing fresh nginx templates..."
+  envsubst  < /usr/share/odk/nginx/odk.conf.template > /etc/nginx/conf.d/odk.conf
+  echo "starting nginx for upstream ssl..."
+  exec nginx -g "daemon off;"
 
 odkConfTemplate: |-
   server {
@@ -88,7 +92,7 @@ odkConfTemplate: |-
 
     server_tokens off;
 
-    include /usr/share/nginx/common-headers.nginx.conf;
+    include /usr/share/odk/nginx/common-headers.conf;
 
     client_max_body_size 100m;
 
@@ -98,8 +102,13 @@ odkConfTemplate: |-
     gzip_http_version 1.1;
     gzip_types text/plain text/css application/json application/x-javascript text/xml text/csv;
 
+    location = /robots.txt {
+      add_header Content-Type text/plain;
+      return 200 "User-agent: *\nDisallow: /\n";
+    }
+
     location /- {
-      proxy_pass http://${ENKETO_URL}:8005/-;
+      proxy_pass http://${ENKETO_URL}:8005;
       proxy_redirect off;
       proxy_set_header Host $host;
 
@@ -114,11 +123,6 @@ odkConfTemplate: |-
       proxy_pass http://${BACKEND_URL}:8383;
       proxy_redirect off;
 
-      # set up request-body gzip decompression:
-      set $max_chunk_size 16384;    # ~16KB
-      set $max_body_size 134217728; # ~128MB
-      rewrite_by_lua_file inflate_body.lua;
-
       # buffer requests, but not responses, so streaming out works.
       proxy_request_buffering on;
       proxy_buffering off;
@@ -129,16 +133,16 @@ odkConfTemplate: |-
       root /usr/share/nginx/html;
 
       location /version.txt {
-        include /usr/share/nginx/common-headers.nginx.conf;
+        include /usr/share/odk/nginx/common-headers.conf;
         add_header Cache-Control no-cache;
       }
       location /index.html {
-        include /usr/share/nginx/common-headers.nginx.conf;
+        include /usr/share/odk/nginx/common-headers.conf;
         add_header Cache-Control no-cache;
       }
     }
 
     location /csp-report {
-      proxy_pass https://o130137.ingest.sentry.io/api/1298632/security/?sentry_key=3cf75f54983e473da6bd07daddf0d2ee;
+      proxy_pass https://${SENTRY_ORG_SUBDOMAIN}.ingest.sentry.io/api/${SENTRY_PROJECT}/security/?sentry_key=${SENTRY_KEY};
     }
   }

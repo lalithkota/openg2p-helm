@@ -11,8 +11,8 @@ service:
 
 image:
   registry: docker.io
-  repository: itsissa/namshi-smtp
-  tag: 4.92-8.deb10u6
+  repository: ixdotai/smtp
+  tag: v0.5.2
   pullPolicy: IfNotPresent
 
 containerPort: 25

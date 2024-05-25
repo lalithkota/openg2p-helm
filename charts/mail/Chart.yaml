@@ -2,7 +2,7 @@ apiVersion: v2
 name: mail
 description: A Helm chart for mail/smtp server.
 type: application
-version: 1.2.0
+version: "v2024.1.0"
 appVersion: ""
 dependencies:
 - name: common
