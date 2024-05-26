@@ -5,5 +5,5 @@ metadata:
 data:
   odk.conf.template: |-
     {{- tpl .Values.odkConfTemplate $ | nindent 4 }}
-  setup-odk.sh:
+  setup-odk.sh: |-
     {{- tpl .Values.setupOdkScript $ | nindent 4 }}

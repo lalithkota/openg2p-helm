@@ -1,7 +1,7 @@
 dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 13.4.6
+  version: 15.4.0
 - name: redis
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 18.19.4
@@ -11,5 +11,5 @@ dependencies:
 - name: sunbird-rc-g2p-mapper-registry
   repository: ""
   version: 0.1.0
-digest: sha256:76cd584871b16c7c75f07b2f1993eae235e8c28d3e4312d89e95d614e9542147
-generated: "2024-05-24T20:57:59.35460007+05:30"
+digest: sha256:2e0fa04ab464c79ced4dfef86733f1dd83aa5e69c37cec42d027bd29ce9eedbe
+generated: "2024-05-26T01:09:19.410949873+05:30"

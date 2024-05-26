@@ -13,6 +13,7 @@ global:
 
 odk-central-mail:
   enabled: true
+  nameOverride: mail
 odk-central-pyxform:
   enabled: true
   nameOverride: pyxform
@@ -30,7 +31,7 @@ ingress:
   enabled: false
   ingressClassName: ""
   pathType: ImplementationSpecific
-  pathBackend: "{{ include "common.names.fullname" . }}-frontend"
+  pathBackend: '{{ include "common.names.fullname" . }}-frontend'
   apiVersion: ""
   hostname: ""
   annotations: {}

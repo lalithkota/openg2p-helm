@@ -4,19 +4,19 @@ Render Env values section
 {{- define "odkFrontend.envVars" -}}
 {{- range $k, $v := .Values.envVars }}
 - name: {{ $k }}
-  value: {{ tpl $v $ | quote }}
+  value: {{ include "common.tplvalues.render" ( dict "value" $v "context" $ ) | quote }}
 {{- end }}
 {{- range $k, $v := .Values.envVarsFrom }}
 - name: {{ $k }}
   valueFrom:
     {{- if $v.configMapKeyRef }}
     configMapKeyRef:
-      name: {{ tpl $v.configMapKeyRef.name $ | quote }}
-      key: {{ tpl $v.configMapKeyRef.key $ | quote }}
+      name: {{ include "common.tplvalues.render" ( dict "value" $v.configMapKeyRef.name "context" $ ) | quote }}
+      key: {{ include "common.tplvalues.render" ( dict "value" $v.configMapKeyRef.key "context" $ ) | quote }}
     {{- else if $v.secretKeyRef }}
     secretKeyRef:
-      name: {{ tpl $v.secretKeyRef.name $ | quote }}
-      key: {{ tpl $v.secretKeyRef.key $ | quote }}
+      name: {{ include "common.tplvalues.render" ( dict "value" $v.secretKeyRef.name "context" $ ) | quote }}
+      key: {{ include "common.tplvalues.render" ( dict "value" $v.secretKeyRef.key "context" $ ) | quote }}
     {{- end }}
 {{- end }}
 {{- end }}

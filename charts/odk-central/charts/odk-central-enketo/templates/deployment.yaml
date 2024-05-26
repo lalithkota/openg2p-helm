@@ -52,7 +52,7 @@ spec:
             mountPath: /srv/src/enketo/packages/enketo-express/config/config.json.template
             subPath: config.json.template
           - name: start-enketo-command
-            mountPath: /srv/src/enketo/packages/enketo-express/start-odk.sh
+            mountPath: /srv/src/enketo/packages/enketo-express/start-enketo.sh
             subPath: start-enketo.sh
       volumes:
       - name: start-enketo-command

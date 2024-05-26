@@ -92,7 +92,7 @@ redis:
   main:
     enabled: true
     image: redis:7.2
-    imagePullPolicy: IfNotPreset
+    imagePullPolicy: IfNotPresent
     replicaCount: 1
     confMountPath: /usr/local/etc/redis/mnt
     command:
@@ -105,7 +105,7 @@ redis:
   cache:
     enabled: true
     image: redis:7.2
-    imagePullPolicy: IfNotPreset
+    imagePullPolicy: IfNotPresent
     replicaCount: 1
     confMountPath: /usr/local/etc/redis/mnt
     command:
