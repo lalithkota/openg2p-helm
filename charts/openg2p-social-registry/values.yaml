@@ -2,6 +2,24 @@ global:
   hostname: "openg2p.sandbox.net"
   mailname: "openg2p.sandbox.net"
 
+istio:
+  enabled: true
+  virtualservice:
+    enabled: true
+    host: ""
+    gateway: "internal"
+  gateway:
+    enabled: false
+    host: ""
+    ingressController:
+      istio: ingressgateway
+    httpTlsRedirect: true
+    httpEnabled: true
+    httpsEnabled: false
+    tls:
+      mode: SIMPLE
+      credentialName: ""
+
 odoo:
   image:
     repository: openg2p/openg2p-social-registry-odoo-package
@@ -35,31 +53,62 @@ odoo:
   - name: SERVER_WIDE_MODULES
     value: web,queue_job
   # not using bitnami smtpHost and smtpPort variables, because they need user and pass as well.
-  - name: ODOO_SMTP_HOST
+  - name: OPENG2P_SMTP_HOST
     value: "social-registry-mail"
-  - name: ODOO_SMTP_PORT_NUMBER
+  - name: OPENG2P_SMTP_PORT_NUMBER
     value: "25"
   - name: LOG_HANDLER
-    value: "[':DEBUG']"
+    value: "[':INFO']"
   - name: LOG_DB
-    value: "True"
+    value: "False"
 
 mail:
   enabled: true
 
-istio:
+odk-central:
   enabled: true
-  virtualservice:
+  odk-central-backend:
+    postgresql:
+      nameOverride: odk-central-postgresql
+
+minio:
+  enabled: true
+  persistence:
     enabled: true
-    host: ""
-    gateway: "istio-system/all-hosts"
-  gateway:
-    enabled: false
-    host: ""
-    ingressController:
-      istio: ingressgateway
-    httpTlsRedirect: true
-    tls:
+    size: 16Gi
+
+  extraEnvVars:
+  - name: MINIO_IDENTITY_OPENID_CONFIG_URL
+    value: "http://keycloak.openg2p.sandbox.net/realms/master/.well-known/openid-configuration"
+  - name: MINIO_IDENTITY_OPENID_CLIENT_ID
+    value: "openg2p-minio-client-prod"
+  - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET
+    value: ""
+  - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME
+    value: Keycloak
+  - name: MINIO_IDENTITY_OPENID_CLAIM_NAME
+    value: client_roles
+  - name: MINIO_IDENTITY_OPENID_SCOPES
+    value: openid,profile,email
+  - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC
+    value: "on"
+  - name: MINIO_IDENTITY_OPENID_CLAIM_USERINFO
+    value: "on"
+
+  istio:
+    enabled: true
+    virtualservice:
       enabled: true
-      mode: SIMPLE
-      credentialName: ""
+      host: ""
+      gateway: "internal"
+    gateway:
+      enabled: false
+      host: ""
+      ingressController:
+        istio: ingressgateway
+      httpTlsRedirect: true
+      httpEnabled: true
+      httpsEnabled: false
+      tls:
+        mode: SIMPLE
+        credentialName: ""

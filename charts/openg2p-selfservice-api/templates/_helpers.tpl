@@ -74,12 +74,12 @@ Render Env values section
   valueFrom:
     {{- if $v.configMapKeyRef }}
     configMapKeyRef:
-      name: {{ tpl $v.configMapKeyRef.name $ | quote }}
-      key: {{ tpl $v.configMapKeyRef.key $ | quote }}
+      name: {{ tpl $v.configMapKeyRef.name $ | squote }}
+      key: {{ tpl $v.configMapKeyRef.key $ | squote }}
     {{- else if $v.secretKeyRef }}
     secretKeyRef:
-      name: {{ tpl $v.secretKeyRef.name $ | quote }}
-      key: {{ tpl $v.secretKeyRef.key $ | quote }}
+      name: {{ tpl $v.secretKeyRef.name $ | squote }}
+      key: {{ tpl $v.secretKeyRef.key $ | squote }}
     {{- end }}
 {{- end }}
 {{- end }}
@@ -90,19 +90,19 @@ Render Postgres Init Env values
 {{- define "portal.postgresInitEnvVars" -}}
 {{- range $k, $v := .Values.postgresInit.envVars }}
 - name: {{ $k }}
-  value: {{ tpl $v $ | quote }}
+  value: {{ tpl $v $ | squote }}
 {{- end }}
 {{- range $k, $v := .Values.postgresInit.envVarsFrom }}
 - name: {{ $k }}
   valueFrom:
     {{- if $v.configMapKeyRef }}
     configMapKeyRef:
-      name: {{ tpl $v.configMapKeyRef.name $ | quote }}
-      key: {{ tpl $v.configMapKeyRef.key $ | quote }}
+      name: {{ tpl $v.configMapKeyRef.name $ | squote }}
+      key: {{ tpl $v.configMapKeyRef.key $ | squote }}
     {{- else if $v.secretKeyRef }}
     secretKeyRef:
-      name: {{ tpl $v.secretKeyRef.name $ | quote }}
-      key: {{ tpl $v.secretKeyRef.key $ | quote }}
+      name: {{ tpl $v.secretKeyRef.name $ | squote }}
+      key: {{ tpl $v.secretKeyRef.key $ | squote }}
     {{- end }}
 {{- end }}
 {{- end }}

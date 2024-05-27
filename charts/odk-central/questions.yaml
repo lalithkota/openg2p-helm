@@ -17,4 +17,3 @@ questions:
   description: OIDC Client Secret for ODK Central Login
   type: string 
   label: "OIDC Client Secret"
-

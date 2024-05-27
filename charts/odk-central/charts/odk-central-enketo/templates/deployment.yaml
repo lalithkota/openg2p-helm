@@ -31,7 +31,7 @@ spec:
           args: {{- include "common.tplvalues.render" (dict "value" .Values.args "context" $) | nindent 12 }}
           {{- end }}
           env:
-            {{ include "odkEnketo.envVars" . | nindent 12 }}
+            {{- include "odkEnketo.envVars" . | nindent 12 }}
           ports:
           - name: container-port
             containerPort: {{ .Values.containerPort }}

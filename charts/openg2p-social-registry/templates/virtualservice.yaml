@@ -8,13 +8,9 @@ metadata:
     {{- include "socialRegistry.labels" . | nindent 4 }}
 spec:
   hosts:
-  - {{ include "socialRegistry.hostname" . }}
+  - {{ default .Values.global.hostname .Values.istio.virtualservice.host }}
   gateways:
-    {{- if not .Values.istio.virtualservice.gateway }}
-    - {{ include "socialRegistry.fullname" . }}
-    {{- else }}
-    - {{ .Values.istio.virtualservice.gateway }}
-    {{- end }}
+  - {{ default (include "socialRegistry.fullname" .) .Values.istio.virtualservice.gateway }}
   http:
   - match:
     - uri:
@@ -24,7 +20,7 @@ spec:
   - headers:
       request:
         set:
-          x-forwarded-host: {{ include "socialRegistry.hostname" . }}
+          x-forwarded-host: {{ default .Values.global.hostname .Values.istio.virtualservice.host }}
           x-forwarded-proto: https
     route:
     - destination:

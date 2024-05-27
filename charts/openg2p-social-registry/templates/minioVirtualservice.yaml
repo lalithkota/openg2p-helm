@@ -1,0 +1,26 @@
+{{- if .Values.minio.istio.enabled }}
+{{- if .Values.minio.istio.virtualservice.enabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "socialRegistry.fullname" . }}-minio
+  labels:
+    {{- include "socialRegistry.labels" . | nindent 4 }}
+spec:
+  hosts:
+  - {{ .Values.minio.istio.virtualservice.host }}
+  gateways:
+  - {{ default (include "socialRegistry.fullname" .) .Values.minio.istio.virtualservice.gateway }}
+  http:
+  - headers:
+      request:
+        set:
+          x-forwarded-host: {{ .Values.minio.istio.virtualservice.host }}
+          x-forwarded-proto: https
+    route:
+    - destination:
+        host: {{ include "socialRegistry.fullname" . }}-minio
+        port:
+          number: 9001
+{{- end }}
+{{- end }}

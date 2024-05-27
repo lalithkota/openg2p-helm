@@ -69,7 +69,7 @@ podSecurityContext:
 
 envVars:
   MAILNAME: '{{ .Values.global.mailname }}'
-  RELAY_NETWORKS: ":10.0.0.0/8"
+  RELAY_NETWORKS: ':10.0.0.0/8'
 
 envVarsFrom: {}
 
