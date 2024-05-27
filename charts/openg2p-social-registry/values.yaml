@@ -1,5 +1,6 @@
 global:
   hostname: "openg2p.sandbox.net"
+  mailname: "openg2p.sandbox.net"
 
 odoo:
   image:
@@ -11,26 +12,15 @@ odoo:
     type: ClusterIP
     port: 80
 
-  odooEmail: admin
+  odooEmail: admin@{{ .Values.global.mailname }}
 
   postgresql:
-    enabled: false
-    # primary:
-    #   extendedConfiguration: |-
-    #     wal_level = logical
-    #     max_wal_senders = 20
-    #     max_replication_slots = 10
-
-  externalDatabase:
-    host: "postgres-postgresql.postgres"
-    port: 5432
-    user: socialregistryuser
-    database: socialregistrydb
-    create: false
-    postgresqlPostgresUser: "postgres"
-    existingSecret: "postgres-postgresql"
-    existingSecretPasswordKey: "password"
-    existingSecretPostgresPasswordKey: "postgres-password"
+    enabled: true
+    primary:
+      extendedConfiguration: |-
+        wal_level = logical
+        max_wal_senders = 20
+        max_replication_slots = 10
 
   livenessProbe:
     enabled: false
@@ -45,14 +35,17 @@ odoo:
   - name: SERVER_WIDE_MODULES
     value: web,queue_job
   # not using bitnami smtpHost and smtpPort variables, because they need user and pass as well.
-  - name: OPENG2P_SMTP_HOST
-    value: "openg2p-mail.openg2p"
-  - name: OPENG2P_SMTP_PORT
+  - name: ODOO_SMTP_HOST
+    value: "social-registry-mail"
+  - name: ODOO_SMTP_PORT_NUMBER
     value: "25"
   - name: LOG_HANDLER
     value: "[':DEBUG']"
   - name: LOG_DB
     value: "True"
+
+mail:
+  enabled: true
 
 istio:
   enabled: true

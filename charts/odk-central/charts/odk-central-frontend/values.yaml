@@ -72,8 +72,8 @@ envVars:
   # Donot change the following. For now.
   SSL_TYPE: upstream
   DOMAIN: "_"
-  ENKETO_URL: '{{ .Release.Name }}-enketo'
-  BACKEND_URL: '{{ .Release.Name }}-backend'
+  ENKETO_URL: '{{ .Release.Name }}-odk-central-enketo'
+  BACKEND_URL: '{{ .Release.Name }}-odk-central-backend'
 
   SENTRY_ORG_SUBDOMAIN: "o130137"
   SENTRY_KEY: "3cf75f54983e473da6bd07daddf0d2ee"

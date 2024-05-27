@@ -13,25 +13,20 @@ global:
 
 odk-central-mail:
   enabled: true
-  nameOverride: mail
 odk-central-pyxform:
   enabled: true
-  nameOverride: pyxform
 odk-central-enketo:
   enabled: true
-  nameOverride: enketo
 odk-central-backend:
   enabled: true
-  nameOverride: backend
 odk-central-frontend:
   enabled: true
-  nameOverride: frontend
 
 ingress:
   enabled: false
   ingressClassName: ""
   pathType: ImplementationSpecific
-  pathBackend: '{{ include "common.names.fullname" . }}-frontend'
+  pathBackend: '{{ include "common.names.fullname" . }}-odk-central-frontendend'
   apiVersion: ""
   hostname: ""
   annotations: {}
@@ -47,7 +42,7 @@ istio:
     enabled: true
     host: ""
     gateway: "internal"
-    destination: '{{ include "common.names.fullname" . }}-frontend'
+    destination: '{{ include "common.names.fullname" . }}-odk-central-frontendend'
     destinationPort: "80"
   gateway:
     enabled: false
