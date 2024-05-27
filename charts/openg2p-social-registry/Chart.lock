@@ -1,9 +1,9 @@
 dependencies:
 - name: odoo
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://registry-1.docker.io/bitnamicharts
   version: 21.6.5
 - name: mail
   repository: ""
   version: 1.2.0
-digest: sha256:7370ab3bd0ffb423e28ebac93d5d6782585c796bb52fb9802e2260802b27ef5e
-generated: "2024-05-27T20:09:16.188518244+05:30"
+digest: sha256:56c99cdafd19f7e87c1dbdecf257e1d0ff20af9797003522716b7648c7acf391
+generated: "2024-05-27T20:18:59.950975206+05:30"

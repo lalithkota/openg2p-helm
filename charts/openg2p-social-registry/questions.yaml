@@ -1,0 +1,11 @@
+questions:
+- variable: fullnameOverride
+  default: "social-registry" 
+  description: Name of the installation 
+  type: String 
+  label: "Install name" 
+- variable: global.hostname
+  default: socialregistry.dev.openg2p.net
+  description: Hostname to access Social Registry 
+  type: String
+  label: "Hostname"

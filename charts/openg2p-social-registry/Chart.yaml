@@ -1,14 +1,18 @@
 apiVersion: v2
 name: openg2p-social-registry
-description: A Helm chart for OpenG2P Social Registry Module
+description: A Helm chart for OpenG2P Social Registry
 type: application
 version: 1.2.0
 appVersion: "1.2.0"
 dependencies:
 - name: odoo
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://registry-1.docker.io/bitnamicharts
   version: 21.6.5
   condition: odoo.enabled
 - name: mail
   version: 1.2.0
   condition: mail.enabled
+icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
+annotations:
+  catalog.cattle.io/display-name: "OpenG2P Social Registry"
+  catalog.cattle.io/os: linux
