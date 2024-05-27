@@ -30,7 +30,7 @@ odoo:
     type: ClusterIP
     port: 80
 
-  odooEmail: admin@{{ .Values.global.mailname }}
+  odooEmail: admin@openg2p.org
 
   postgresql:
     enabled: true
