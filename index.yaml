@@ -3,28 +3,85 @@ entries:
   g2p-bridge:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-09T09:33:30.438396092Z"
+    created: "2024-05-28T05:14:01.925283413Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: oci://registry-1.docker.io/bitnamicharts
-      version: 13.x.x
+      version: 15.x.x
     - condition: redis.enabled
       name: redis
       repository: oci://registry-1.docker.io/bitnamicharts
       version: 18.x.x
     description: A Helm chart for OpenG2P G2P Bridge
-    digest: 4720327a38301f7b9b053cf5d6c0779360ee274853d3cb4d6111d431772b846d
+    digest: 6a12c8a5f8c9a1076ee2e13c9fd08eaf982fbc244f7b26f27e9b1b81ba84a3f9
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: g2p-bridge
     type: application
     urls:
     - https://openg2p.github.io/openg2p-helm/g2p-bridge-0.1.0.tgz
     version: 0.1.0
+  mail:
+  - apiVersion: v2
+    created: "2024-05-28T05:14:01.926135298Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 2.x.x
+    description: A Helm chart for mail/smtp server.
+    digest: 1ed246c08a65384781e5bbc21cf4b98c657fd17b47791be19419d77e5cc5bccf
+    keywords:
+    - mail
+    - smtp
+    name: mail
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/mail-1.2.0.tgz
+    version: 1.2.0
   odk-central:
+  - annotations:
+      catalog.cattle.io/display-name: ODK Central
+    apiVersion: v2
+    appVersion: v2024.1.0
+    created: "2024-05-28T05:14:01.951810031Z"
+    dependencies:
+    - alias: odk-central-mail
+      condition: odk-central-mail.enabled
+      name: mail
+      repository: ""
+      version: 1.2.0
+    - condition: odk-central-pyxform.enabled
+      name: odk-central-pyxform
+      repository: ""
+      version: v2024.1.0
+    - condition: odk-central-enketo.enabled
+      name: odk-central-enketo
+      repository: ""
+      version: v2024.1.0
+    - condition: odk-central-backend.enabled
+      name: odk-central-backend
+      repository: ""
+      version: v2024.1.0
+    - condition: odk-central-frontend.enabled
+      name: odk-central-frontend
+      repository: ""
+      version: v2024.1.0
+    description: A Helm chart for odk-central.
+    digest: 2501b54d00dfc6cf4d13c939fbb5c0c4db411afc4522447079722ef6721d865e
+    keywords:
+    - odk
+    - odk-central
+    maintainers:
+    - email: lalith@openg2p.org
+      name: lalithkota
+    name: odk-central
+    type: application
+    urls:
+    - https://openg2p.github.io/openg2p-helm/odk-central-v2024.1.0.tgz
+    version: v2024.1.0
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2024-05-09T09:33:30.454275718Z"
+    created: "2024-05-28T05:14:01.942329093Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -61,7 +118,7 @@ entries:
     version: 1.2.0
   - apiVersion: v2
     appVersion: v2023.1.0
-    created: "2024-05-09T09:33:30.446465869Z"
+    created: "2024-05-28T05:14:01.934231281Z"
     dependencies:
     - condition: odk-central-mail.enabled
       name: odk-central-mail
@@ -99,19 +156,18 @@ entries:
   openg2p:
   - apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-05-09T09:33:30.469389789Z"
+    created: "2024-05-28T05:14:01.96627693Z"
     dependencies:
-    - alias: mail
-      condition: mail.enabled
-      name: odk-central-mail
+    - condition: mail.enabled
+      name: mail
       repository: ""
       version: 1.2.0
     - condition: odoo.enabled
       name: odoo
-      repository: https://charts.bitnami.com/bitnami
+      repository: oci://registry-1.docker.io/bitnamicharts
       version: 21.6.5
     description: A Helm chart for OpenG2P PBMS Package
-    digest: d9ccccc763c010ad9b7e1afe326d40eda053935675b53aa59b4f13bc52aa4bff
+    digest: 5f33f76fecc3fad7433df683e03df0da96d8dc99f5127c8a657336416da7a214
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: openg2p
     type: application
@@ -120,7 +176,7 @@ entries:
     version: 1.2.0
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-05-09T09:33:30.463338736Z"
+    created: "2024-05-28T05:14:01.957974329Z"
     dependencies:
     - alias: mail
       condition: mail.enabled
@@ -141,9 +197,9 @@ entries:
   openg2p-selfservice-api:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-09T09:33:30.469820745Z"
+    created: "2024-05-28T05:14:01.967076146Z"
     description: A Helm chart for API backend of OpenG2P Self Service Portal
-    digest: 4b57b09ca20c5bc2f752bed831f90381ec5c13b55195f05de09304231c19cc0b
+    digest: be0491d1351166c705bc6605ed8a76ee03e2129670ea7f8c6e22b44b1e6baaea
     name: openg2p-selfservice-api
     type: application
     urls:
@@ -152,9 +208,9 @@ entries:
   openg2p-selfservice-ui:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-09T09:33:30.470196047Z"
+    created: "2024-05-28T05:14:01.967801303Z"
     description: A Helm chart for UI frontend of OpenG2P Self Service Portal
-    digest: 0bbee1fa44e9ed16fdc9fb8feac4dfb7f2a5feb07d9dd9fabd6890286c84dbbf
+    digest: a2b0a14e9f8ee5d1b879365a8bc6b70d6dd998fddf98c6f50bc2bde5bdb1e69f
     name: openg2p-selfservice-ui
     type: application
     urls:
@@ -166,14 +222,26 @@ entries:
       catalog.cattle.io/os: linux
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-05-09T09:33:30.475937141Z"
+    created: "2024-05-28T05:14:01.986740649Z"
     dependencies:
     - condition: odoo.enabled
       name: odoo
-      repository: https://charts.bitnami.com/bitnami
+      repository: oci://registry-1.docker.io/bitnamicharts
       version: 21.6.5
+    - condition: minio.enabled
+      name: minio
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 12.12.2
+    - condition: odk-central.enabled
+      name: odk-central
+      repository: ""
+      version: v2024.1.0
+    - condition: mail.enabled
+      name: mail
+      repository: ""
+      version: 1.2.0
     description: A Helm chart for OpenG2P Social Registry
-    digest: f24f8437e56e9a32c4b8e44e7ca35eafb166e89cc9c72d31eca469c92eb2e289
+    digest: d81215123aee2a0c697b7e4eeb42808e7de23c7c7fb1a8642df4c94353be242d
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
     name: openg2p-social-registry
     type: application
@@ -183,12 +251,12 @@ entries:
   social-payments-account-registry:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-09T09:33:30.501124332Z"
+    created: "2024-05-28T05:14:02.015140369Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: oci://registry-1.docker.io/bitnamicharts
-      version: 13.x.x
+      version: 15.x.x
     - condition: redis.enabled
       name: redis
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -202,7 +270,7 @@ entries:
       repository: ""
       version: 0.1.0
     description: A Helm chart for Social Payments Account Registry
-    digest: 3d2795a8413de89fa7c68332a9fa16453d8be00aeb2deb96b33eba45cfa1c798
+    digest: 6c50d36c945db05f4e32451cb936e03c872691e853baa9a4ef25e87ff667b555
     name: social-payments-account-registry
     type: application
     urls:
@@ -212,7 +280,7 @@ entries:
   - annotations:
       catalog.cattle.io/display-name: OpenG2P SPAR
     apiVersion: v2
-    created: "2024-05-09T09:33:30.52667534Z"
+    created: "2024-05-28T05:14:02.045212072Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -241,7 +309,7 @@ entries:
   - annotations:
       catalog.cattle.io/display-name: OpenG2P SPAR
     apiVersion: v2
-    created: "2024-05-09T09:33:30.514212413Z"
+    created: "2024-05-28T05:14:02.030243269Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -270,14 +338,14 @@ entries:
   spar-g2pconnect-id-mapper:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-09T09:33:30.531609469Z"
+    created: "2024-05-28T05:14:02.049449152Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: oci://registry-1.docker.io/bitnamicharts
-      version: 13.x.x
+      version: 15.x.x
     description: A Helm chart for SPAR G2P Connect ID Mapper
-    digest: 8b55235ddd8ad9219b9d453117d7c996f589cd284c3dab176ace485c1bec272a
+    digest: fe4220747bfee4b35ce7ac35801f43a25463996e23d84495ea00653118d13aef
     name: spar-g2pconnect-id-mapper
     type: application
     urls:
@@ -285,7 +353,7 @@ entries:
     version: 0.1.0
   spar-mapper-api:
   - apiVersion: v2
-    created: "2024-05-09T09:33:30.536239954Z"
+    created: "2024-05-28T05:14:02.054260968Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -301,7 +369,7 @@ entries:
     version: 1.0.0
   spar-self-service-api:
   - apiVersion: v2
-    created: "2024-05-09T09:33:30.540381808Z"
+    created: "2024-05-28T05:14:02.059288842Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -317,7 +385,7 @@ entries:
     version: 1.0.0
   spar-self-service-ui:
   - apiVersion: v2
-    created: "2024-05-09T09:33:30.541929081Z"
+    created: "2024-05-28T05:14:02.060084321Z"
     description: A Helm chart for OpenG2P SPAR Self Service UI
     digest: a7ccda3f1afb1fc73f55a69a9a32220559b0286b1fab3a5394877a46238d67b2
     icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
@@ -328,7 +396,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-09T09:33:30.540744837Z"
+    created: "2024-05-28T05:14:02.059675405Z"
     description: A Helm chart for UI for Self Service Portal for Social Payments Account
       Registry
     digest: e7ae4c157b5b5f51274ddfea491337cede168d06e26d2ffdfbc23869e8ff5d81
@@ -340,18 +408,18 @@ entries:
   sunbird-rc-core:
   - apiVersion: v2
     appVersion: v0.0.14
-    created: "2024-05-09T09:33:30.552349316Z"
+    created: "2024-05-28T05:14:02.071857468Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: oci://registry-1.docker.io/bitnamicharts
-      version: 13.x.x
+      version: 15.x.x
     - condition: elasticsearch.enabled
       name: elasticsearch
       repository: oci://registry-1.docker.io/bitnamicharts
       version: 19.x.x
     description: A Helm chart for Sunbird Registry
-    digest: 86a74dfb763705598664c877e7f7993894c81abd3ebe7178f1b63f8c97d42c05
+    digest: 0a09712fdcd617c416e4f9cf5743a14473b248abee7a7031251cd28cbdf5f9bf
     name: sunbird-rc-core
     type: application
     urls:
@@ -360,7 +428,7 @@ entries:
   sunbird-rc-g2p-mapper-registry:
   - apiVersion: v2
     appVersion: v0.1.0
-    created: "2024-05-09T09:33:30.563607222Z"
+    created: "2024-05-28T05:14:02.083615544Z"
     dependencies:
     - alias: registry
       condition: registry.enabled
@@ -374,4 +442,4 @@ entries:
     urls:
     - https://openg2p.github.io/openg2p-helm/sunbird-rc-g2p-mapper-registry-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-09T09:33:30.423951933Z"
+generated: "2024-05-28T05:14:01.914914727Z"
