@@ -3,7 +3,6 @@ name: odk-central
 description: A Helm chart for odk-central.
 type: application
 version: "v2024.1.0"
-appVersion: "v2024.1.0"
 dependencies: 
   - name: mail
     alias: odk-central-mail
