@@ -7,7 +7,7 @@ appVersion: "v0.0.14"
 dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 13.x.x
+  version: 15.x.x
   condition: postgresql.enabled
 - name: elasticsearch
   repository: oci://registry-1.docker.io/bitnamicharts

@@ -1,3 +1,6 @@
+global:
+  hostname: ""
+
 replicaCount: 1
 
 service:
@@ -7,7 +10,7 @@ service:
 image:
   registry: docker.io
   repository: openg2p/odk-central-frontend
-  tag: v2023.1.0
+  tag: v2024.1.0-oidc
   pullPolicy: Always
 
 containerPort: 80
@@ -65,12 +68,82 @@ podSecurityContext:
   enabled: false
   fsGroup: 1001
 
-extraEnvVars: []
+envVars:
+  # Donot change the following. For now.
+  SSL_TYPE: upstream
+  DOMAIN: "_"
+  ENKETO_URL: '{{ .Release.Name }}-odk-central-enketo'
+  BACKEND_URL: '{{ .Release.Name }}-odk-central-backend'
 
-extraEnvVarsCM: []
+  SENTRY_ORG_SUBDOMAIN: "o130137"
+  SENTRY_KEY: "3cf75f54983e473da6bd07daddf0d2ee"
+  SENTRY_PROJECT: "1298632"
 
-extraEnvVarsSecret: []
+setupOdkScript: |-
+  #!/bin/bash
+  echo "writing fresh nginx templates..."
+  export DOLLAR='$'
+  envsubst < /usr/share/odk/nginx/odk.conf.template > /etc/nginx/conf.d/odk.conf
+  rm -f /etc/nginx/conf.d/redirector.conf
+  exec nginx -g "daemon off;"
 
-# Donot change the following. For now.
-sslType: upstream
-nginxDomain: "_"
+odkConfTemplate: |-
+  server {
+    listen 80;
+
+    server_tokens off;
+
+    include /usr/share/odk/nginx/common-headers.conf;
+
+    client_max_body_size 100m;
+
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1280;
+    gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/x-javascript text/xml text/csv;
+
+    location = /robots.txt {
+      add_header Content-Type text/plain;
+      return 200 "User-agent: *\nDisallow: /\n";
+    }
+
+    location /- {
+      proxy_pass http://${ENKETO_URL}:8005;
+      proxy_redirect off;
+      proxy_set_header Host ${DOLLAR}host;
+
+      add_header Referrer-Policy same-origin;
+      add_header Strict-Transport-Security "max-age=63072000" always;
+      add_header X-Frame-Options "SAMEORIGIN";
+      add_header X-Content-Type-Options nosniff;
+    }
+
+    location ~ ^/v\d {
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_pass http://${BACKEND_URL}:8383;
+      proxy_redirect off;
+
+      # buffer requests, but not responses, so streaming out works.
+      proxy_request_buffering on;
+      proxy_buffering off;
+      proxy_read_timeout 2m;
+    }
+
+    location / {
+      root /usr/share/nginx/html;
+
+      location /version.txt {
+        include /usr/share/odk/nginx/common-headers.conf;
+        add_header Cache-Control no-cache;
+      }
+      location /index.html {
+        include /usr/share/odk/nginx/common-headers.conf;
+        add_header Cache-Control no-cache;
+      }
+    }
+
+    location /csp-report {
+      proxy_pass https://${SENTRY_ORG_SUBDOMAIN}.ingest.sentry.io/api/${SENTRY_PROJECT}/security/?sentry_key=${SENTRY_KEY};
+    }
+  }

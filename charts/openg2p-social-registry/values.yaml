@@ -1,5 +1,24 @@
 global:
   hostname: "openg2p.sandbox.net"
+  mailname: "openg2p.sandbox.net"
+
+istio:
+  enabled: true
+  virtualservice:
+    enabled: true
+    host: ""
+    gateway: "internal"
+  gateway:
+    enabled: false
+    host: ""
+    ingressController:
+      istio: ingressgateway
+    httpTlsRedirect: true
+    httpEnabled: true
+    httpsEnabled: false
+    tls:
+      mode: SIMPLE
+      credentialName: ""
 
 odoo:
   image:
@@ -11,26 +30,15 @@ odoo:
     type: ClusterIP
     port: 80
 
-  odooEmail: admin
+  odooEmail: admin@openg2p.org
 
   postgresql:
-    enabled: false
-    # primary:
-    #   extendedConfiguration: |-
-    #     wal_level = logical
-    #     max_wal_senders = 20
-    #     max_replication_slots = 10
-
-  externalDatabase:
-    host: "postgres-postgresql.postgres"
-    port: 5432
-    user: socialregistryuser
-    database: socialregistrydb
-    create: false
-    postgresqlPostgresUser: "postgres"
-    existingSecret: "postgres-postgresql"
-    existingSecretPasswordKey: "password"
-    existingSecretPostgresPasswordKey: "postgres-password"
+    enabled: true
+    primary:
+      extendedConfiguration: |-
+        wal_level = logical
+        max_wal_senders = 20
+        max_replication_slots = 10
 
   livenessProbe:
     enabled: false
@@ -46,27 +54,61 @@ odoo:
     value: web,queue_job
   # not using bitnami smtpHost and smtpPort variables, because they need user and pass as well.
   - name: OPENG2P_SMTP_HOST
-    value: "openg2p-mail.openg2p"
-  - name: OPENG2P_SMTP_PORT
+    value: "social-registry-mail"
+  - name: OPENG2P_SMTP_PORT_NUMBER
     value: "25"
   - name: LOG_HANDLER
-    value: "[':DEBUG']"
+    value: "[':INFO']"
   - name: LOG_DB
-    value: "True"
+    value: "False"
 
-istio:
+mail:
   enabled: true
-  virtualservice:
+
+odk-central:
+  enabled: true
+  odk-central-backend:
+    postgresql:
+      nameOverride: odk-central-postgresql
+
+minio:
+  enabled: true
+  persistence:
     enabled: true
-    host: ""
-    gateway: "istio-system/all-hosts"
-  gateway:
-    enabled: false
-    host: ""
-    ingressController:
-      istio: ingressgateway
-    httpTlsRedirect: true
-    tls:
+    size: 16Gi
+
+  extraEnvVars:
+  - name: MINIO_IDENTITY_OPENID_CONFIG_URL
+    value: "http://keycloak.openg2p.sandbox.net/realms/master/.well-known/openid-configuration"
+  - name: MINIO_IDENTITY_OPENID_CLIENT_ID
+    value: "openg2p-minio-client-prod"
+  - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET
+    value: ""
+  - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME
+    value: Keycloak
+  - name: MINIO_IDENTITY_OPENID_CLAIM_NAME
+    value: client_roles
+  - name: MINIO_IDENTITY_OPENID_SCOPES
+    value: openid,profile,email
+  - name: MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC
+    value: "on"
+  - name: MINIO_IDENTITY_OPENID_CLAIM_USERINFO
+    value: "on"
+
+  istio:
+    enabled: true
+    virtualservice:
       enabled: true
-      mode: SIMPLE
-      credentialName: ""
+      host: ""
+      gateway: "internal"
+    gateway:
+      enabled: false
+      host: ""
+      ingressController:
+        istio: ingressgateway
+      httpTlsRedirect: true
+      httpEnabled: true
+      httpsEnabled: false
+      tls:
+        mode: SIMPLE
+        credentialName: ""

@@ -1,29 +1,32 @@
 global:
+  # hostname name of installation
+  # hostname: "odk.example.com"
   hostname: "odk.openg2p.sandbox.net"
+  # mail name
   mailname: "openg2p.sandbox.net"
-  httpsPort: "443"
+  # system admin email
+  # sysAdminEmail: "admin@example.com"
   sysAdminEmail: "admin@odk.openg2p.sandbox.net"
+  # Support email
+  # supportEmail: "support@example.com"
+  supportEmail: "support@odk.openg2p.sandbox.net"
 
 odk-central-mail:
   enabled: true
-  fullnameOverride: mail
 odk-central-pyxform:
   enabled: true
-  fullnameOverride: pyxform
 odk-central-enketo:
   enabled: true
-  fullnameOverride: enketo
 odk-central-backend:
   enabled: true
-  fullnameOverride: service
 odk-central-frontend:
   enabled: true
-  fullnameOverride: nginx
 
 ingress:
   enabled: false
   ingressClassName: ""
   pathType: ImplementationSpecific
+  pathBackend: '{{ include "common.names.fullname" . }}-odk-central-frontendend'
   apiVersion: ""
   hostname: ""
   annotations: {}
@@ -38,8 +41,8 @@ istio:
   virtualservice:
     enabled: true
     host: ""
-    gateway: "istio-system/all-hosts"
-    destination: "nginx"
+    gateway: "internal"
+    destination: '{{ include "common.names.fullname" . }}-odk-central-frontendend'
     destinationPort: "80"
   gateway:
     enabled: false
@@ -53,7 +56,7 @@ istio:
       credentialName: ""
 
 postgresIngress:
-  enabled: true
+  enabled: false
   type: istio # Define for type ingress
   # host not need. Because tcp.
   istioControllerLabel:

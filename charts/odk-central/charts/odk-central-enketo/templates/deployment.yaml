@@ -31,40 +31,7 @@ spec:
           args: {{- include "common.tplvalues.render" (dict "value" .Values.args "context" $) | nindent 12 }}
           {{- end }}
           env:
-            - name: DOMAIN
-              {{- if .Values.domain }}
-              value: {{ .Values.domain }}
-              {{- else }}
-              value: {{ .Values.global.hostname }}
-              {{- end }}
-            - name: SUPPORT_EMAIL
-              {{- if .Values.supportEmail }}
-              value: {{ .Values.supportEmail }}
-              {{- else }}
-              value: {{ .Values.global.sysAdminEmail }}
-              {{- end }}
-            - name: HTTPS_PORT
-              {{- if .Values.httpsPort }}
-              value: {{ .Values.httpsPort | quote }}
-              {{- else }}
-              value: {{ .Values.global.httpsPort | quote }}
-              {{- end }}
-            {{- if .Values.extraEnvVars }}
-            {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}
-          envFrom:
-            {{- if .Values.extraEnvVarsCM }}
-            {{- range .Values.extraEnvVarsCM }}
-            - configMapRef:
-                name: {{ . }}
-            {{- end }}
-            {{- end }}
-            {{- if .Values.extraEnvVarsSecret }}
-            {{- range .Values.extraEnvVarsSecret }}
-            - secretRef:
-                name: {{ . }}
-            {{- end }}
-            {{- end }}
+            {{- include "odkEnketo.envVars" . | nindent 12 }}
           ports:
           - name: container-port
             containerPort: {{ .Values.containerPort }}
@@ -81,15 +48,17 @@ spec:
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.readinessProbe "enabled") "context" $) | nindent 12 }}
           {{- end }}
           volumeMounts:
-          - name: enketo-secrets
-            mountPath: /etc/secrets
           - name: enketo-conf
-            mountPath: /srv/src/enketo_express/config/config.json.template
+            mountPath: /srv/src/enketo/packages/enketo-express/config/config.json.template
             subPath: config.json.template
+          - name: start-enketo-command
+            mountPath: /srv/src/enketo/packages/enketo-express/start-enketo.sh
+            subPath: start-enketo.sh
       volumes:
-        - name: enketo-secrets
-          secret:
-            secretName: {{ include "common.names.fullname" . }}
-        - name: enketo-conf
-          configMap:
-            name: {{ include "common.names.fullname" . }}
+      - name: start-enketo-command
+        configMap:
+          defaultMode: 493
+          name: {{ include "common.names.fullname" . }}
+      - name: enketo-conf
+        configMap:
+          name: {{ include "common.names.fullname" . }}

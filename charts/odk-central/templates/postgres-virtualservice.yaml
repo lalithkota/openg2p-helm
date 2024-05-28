@@ -3,14 +3,14 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: odk-central-postgres
+  name: {{ include "common.names.fullname" . }}-postgresql
   labels:
-    app.kubernetes.io/name: odk-central
+    app.kubernetes.io/name: {{ include "common.names.fullname" . }}
 spec:
   hosts:
   - "*"
   gateways:
-    - odk-central-postgres
+    - {{ include "common.names.fullname" . }}-postgres
   tcp:
   - match:
     - port: {{ .Values.postgresIngress.port }}

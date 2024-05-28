@@ -1,9 +1,9 @@
 dependencies:
-- name: odk-central-mail
+- name: mail
   repository: ""
   version: 1.2.0
 - name: odoo
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://registry-1.docker.io/bitnamicharts
   version: 21.6.5
-digest: sha256:dc3134aaf06e2a987ebaa77d7ce7cd347d5fccf4eff9a8de932fe88e0f7f5715
-generated: "2024-02-09T18:02:06.285340237+05:30"
+digest: sha256:b7b76fa34c2167918a2306daf5e6da9f726115ff4b67fae98366273e698b0c94
+generated: "2024-05-24T20:56:28.363256816+05:30"

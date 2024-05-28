@@ -1,18 +1,18 @@
 dependencies:
-- name: odk-central-mail
+- name: mail
   repository: ""
   version: 1.2.0
 - name: odk-central-pyxform
   repository: ""
-  version: 1.2.0
+  version: v2024.1.0
 - name: odk-central-enketo
   repository: ""
-  version: 1.2.0
+  version: v2024.1.0
 - name: odk-central-backend
   repository: ""
-  version: 1.2.0
+  version: v2024.1.0
 - name: odk-central-frontend
   repository: ""
-  version: 1.2.0
-digest: sha256:16c0eedfa54001c4fdb86869d87f0bd97b2876021bc6808aec7d00ec54b8211c
-generated: "2024-02-09T18:06:14.498165357+05:30"
+  version: v2024.1.0
+digest: sha256:82b13a64e52e13f38863dd994625f4cc375e7583138c20838140472b627e1b54
+generated: "2024-05-26T01:05:04.846770889+05:30"

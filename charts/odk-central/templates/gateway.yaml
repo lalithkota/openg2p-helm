@@ -3,17 +3,17 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: odk-central
+  name: {{ include "common.names.fullname" . }}
   labels:
-    app.kubernetes.io/name: odk-central
+    app.kubernetes.io/name: {{ include "common.names.fullname" . }}
 spec:
   selector:
     {{ toYaml .Values.istio.gateway.ingressController | nindent 4 }}
   servers:
   - port:
-      number: 80
-      name: http
-      protocol: HTTP
+      name: http2
+      number: 8080
+      protocol: HTTP2
     hosts:
       {{- if .Values.istio.gateway.host }}
       - {{ .Values.istio.gateway.host }}
@@ -25,8 +25,8 @@ spec:
       httpsRedirect: true
     {{- end }}
   - port:
-      number: 443
       name: https
+      number: 8443
       protocol: HTTPS
     hosts:
       {{- if .Values.istio.gateway.host }}

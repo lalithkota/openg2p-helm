@@ -31,30 +31,7 @@ spec:
           args: {{- include "common.tplvalues.render" (dict "value" .Values.args "context" $) | nindent 12 }}
           {{- end }}
           env:
-            - name: SSL_TYPE
-              value: {{ .Values.sslType }}
-            - name: DOMAIN
-              {{- if .Values.nginxDomain }}
-              value: {{ .Values.nginxDomain }}
-              {{- else }}
-              value: {{ .Values.global.hostname }}
-              {{- end }}
-            {{- if .Values.extraEnvVars }}
-            {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
-            {{- end }}
-          envFrom:
-            {{- if .Values.extraEnvVarsCM }}
-            {{- range .Values.extraEnvVarsCM }}
-            - configMapRef:
-                name: {{ . }}
-            {{- end }}
-            {{- end }}
-            {{- if .Values.extraEnvVarsSecret }}
-            {{- range .Values.extraEnvVarsSecret }}
-            - secretRef:
-                name: {{ . }}
-            {{- end }}
-            {{- end }}
+            {{- include "odkFrontend.envVars" . | nindent 12 }}
           ports:
           - name: container-port
             containerPort: {{ .Values.containerPort }}
@@ -70,3 +47,18 @@ spec:
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.readinessProbe "enabled") "context" $) | nindent 12 }}
           {{- end }}
+          volumeMounts:
+          - name: odk-conf-template
+            mountPath: /usr/share/odk/nginx/odk.conf.template
+            subPath: odk.conf.template
+          - name: start-nginx-command
+            mountPath: /scripts/setup-odk.sh
+            subPath: setup-odk.sh
+      volumes:
+      - name: start-nginx-command
+        configMap:
+          defaultMode: 493
+          name: {{ include "common.names.fullname" . }}
+      - name: odk-conf-template
+        configMap:
+          name: {{ include "common.names.fullname" . }}

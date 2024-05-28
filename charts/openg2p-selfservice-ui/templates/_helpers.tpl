@@ -67,19 +67,19 @@ Render Env values section
 {{- define "portal.envVars" -}}
 {{- range $k, $v := .Values.envVars }}
 - name: {{ $k }}
-  value: {{ tpl $v $ | quote }}
+  value: {{ tpl $v $ | squote }}
 {{- end }}
 {{- range $k, $v := .Values.envVarsFrom }}
 - name: {{ $k }}
   valueFrom:
     {{- if $v.configMapKeyRef }}
     configMapKeyRef:
-      name: {{ tpl $v.configMapKeyRef.name $ | quote }}
-      key: {{ tpl $v.configMapKeyRef.key $ | quote }}
+      name: {{ tpl $v.configMapKeyRef.name $ | squote }}
+      key: {{ tpl $v.configMapKeyRef.key $ | squote }}
     {{- else if $v.secretKeyRef }}
     secretKeyRef:
-      name: {{ tpl $v.secretKeyRef.name $ | quote }}
-      key: {{ tpl $v.secretKeyRef.key $ | quote }}
+      name: {{ tpl $v.secretKeyRef.name $ | squote }}
+      key: {{ tpl $v.secretKeyRef.key $ | squote }}
     {{- end }}
 {{- end }}
 {{- end }}

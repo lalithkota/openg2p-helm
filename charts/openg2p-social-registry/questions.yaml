@@ -1,11 +1,62 @@
 questions:
-- variable: fullnameOverride
-  default: "social-registry" 
-  description: Name of the installation 
-  type: String 
-  label: "Install name" 
 - variable: global.hostname
   default: socialregistry.dev.openg2p.net
-  description: Hostname to access Social Registry 
-  type: String
-  label: "Hostname"
+  description: Hostname to access Social Registry
+  type: string
+  label: Hostname
+- variable: odk-central.enabled
+  default: true
+  description: Enabling this install ODK Central.
+  type: Boolean
+  label: Install ODK Central?
+- variable: minio.enabled
+  default: true
+  description: Enabling this install Minio for document store.
+  type: Boolean
+  label: Install Minio?
+
+- variable: odk-central.global.hostname
+  default: odk.sandbox.openg2p.net
+  description: Hostname for ODK Central
+  type: string
+  label: ODK Central Hostname
+  group: ODK Central Settings
+- variable: odk-central.odk-central-backend.envVars.OIDC_ISSUER_URL
+  default: https://keycloak.sandbox.openg2p.net/realms/master
+  description: OIDC Issuer Url for ODK Central login
+  type: string
+  label: OIDC Issuer URL
+  group: ODK Central Settings
+- variable: odk-central.odk-central-backend.envVars.OIDC_CLIENT_ID
+  description: OIDC Client ID for ODK Central login
+  type: string
+  label: OIDC Client ID
+  group: ODK Central Settings
+- variable: odk-central.odk-central-backend.envVars.OIDC_CLIENT_SECRET
+  description: OIDC Client Secret for ODK Central login
+  type: string
+  label: OIDC Client Secret
+  group: ODK Central Settings
+
+- variable: minio.istio.virtualservice.host
+  default: minio.sandbox.openg2p.net
+  description: Hostname for Minio Console
+  type: string
+  label: Minio Console Hostname
+  group: Minio Settings
+- variable: minio.extraEnvVars[0].value
+  default: http://keycloak.sandbox.openg2p.net/realms/master/.well-known/openid-configuration
+  description: OIDC Well know config URL for Minio Console login
+  type: string
+  label: OIDC Well-known Config URL
+  group: Minio Settings
+- variable: minio.extraEnvVars[1].value
+  description: OIDC Client ID for Minio Console login
+  type: string
+  label: OIDC Client ID
+  group: Minio Settings
+- variable: minio.extraEnvVars[2].value
+  description: OIDC Client Secret for Minio Console login
+  type: string
+  label: OIDC Client Secret
+  group: Minio Settings
