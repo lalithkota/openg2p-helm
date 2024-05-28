@@ -67,7 +67,15 @@ mail:
 
 odk-central:
   enabled: true
+  odk-central-mail:
+    enabled: false
+    envVars:
+      EMAIL_HOST: '{{ .Release.Name }}-mail'
   odk-central-backend:
+    envVars:
+      OIDC_ISSUER_URL: ""
+      OIDC_CLIENT_ID: ""
+      OIDC_CLIENT_SECRET: ""
     postgresql:
       nameOverride: odk-central-postgresql
 
