@@ -85,7 +85,7 @@ envVars:
   PYXFORM_PORT: "80"
 
   EMAIL_FROM: 'no-reply@{{ .Values.global.hostname }}'
-  EMAIL_HOST: '{{ .Release.Name }}-mail'
+  EMAIL_HOST: '{{ .Release.Name }}-odk-central-mail'
   EMAIL_PORT: "25"
   EMAIL_SECURE: "false"
   EMAIL_IGNORE_TLS: "true"
