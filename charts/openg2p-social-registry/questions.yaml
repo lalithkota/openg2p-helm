@@ -44,19 +44,21 @@ questions:
   type: string
   label: Minio Console Hostname
   group: Minio Settings
-- variable: minio.extraEnvVars[0].value
-  default: http://keycloak.sandbox.openg2p.net/realms/master/.well-known/openid-configuration
-  description: OIDC Well know config URL for Minio Console login
-  type: string
-  label: OIDC Well-known Config URL
-  group: Minio Settings
-- variable: minio.extraEnvVars[1].value
-  description: OIDC Client ID for Minio Console login
-  type: string
-  label: OIDC Client ID
-  group: Minio Settings
-- variable: minio.extraEnvVars[2].value
-  description: OIDC Client Secret for Minio Console login
-  type: string
-  label: OIDC Client Secret
-  group: Minio Settings
+# The following configs will not work, because of Array type
+# These will have to be edited from yaml.
+# - variable: minio.extraEnvVars[0].value
+#   default: http://keycloak.sandbox.openg2p.net/realms/master/.well-known/openid-configuration
+#   description: OIDC Well know config URL for Minio Console login
+#   type: string
+#   label: OIDC Well-known Config URL
+#   group: Minio Settings
+# - variable: minio.extraEnvVars[1].value
+#   description: OIDC Client ID for Minio Console login
+#   type: string
+#   label: OIDC Client ID
+#   group: Minio Settings
+# - variable: minio.extraEnvVars[2].value
+#   description: OIDC Client Secret for Minio Console login
+#   type: string
+#   label: OIDC Client Secret
+#   group: Minio Settings
