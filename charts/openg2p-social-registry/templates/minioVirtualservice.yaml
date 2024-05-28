@@ -1,3 +1,4 @@
+{{- if .Values.minio.enabled }}
 {{- if .Values.minio.istio.enabled }}
 {{- if .Values.minio.istio.virtualservice.enabled }}
 apiVersion: networking.istio.io/v1alpha3
@@ -22,5 +23,6 @@ spec:
         host: {{ include "socialRegistry.fullname" . }}-minio
         port:
           number: 9001
+{{- end }}
 {{- end }}
 {{- end }}
