@@ -24,7 +24,7 @@ spec:
           x-forwarded-proto: https
     route:
     - destination:
-        host: {{ .Release.Name . }}-odoo
+        host: {{ .Release.Name }}-odoo
         port:
           number: {{ .Values.odoo.service.port }}
 {{- end }}
