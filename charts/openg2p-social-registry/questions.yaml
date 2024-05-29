@@ -15,7 +15,7 @@ questions:
   type: Boolean
   label: Install Minio?
 
-- variable: odk-central.global.hostname
+- variable: odk-central.istio.virtualservice.host
   default: odk.sandbox.openg2p.net
   description: Hostname for ODK Central
   type: string
