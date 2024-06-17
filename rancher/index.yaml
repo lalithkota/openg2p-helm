@@ -1,68 +1,5 @@
 apiVersion: v1
 entries:
-  openg2p-pbms:
-  - annotations:
-      catalog.cattle.io/display-name: OpenG2P PBMS
-      openg2p.org/add-to-rancher: ""
-    apiVersion: v2
-    appVersion: 1.2.0
-    created: "2024-06-05T10:31:39.832713808Z"
-    dependencies:
-    - condition: odoo.enabled
-      name: odoo
-      repository: oci://registry-1.docker.io/bitnamicharts
-      version: 21.6.5
-    - condition: minio.enabled
-      name: minio
-      repository: oci://registry-1.docker.io/bitnamicharts
-      version: 12.12.2
-    - condition: odk-central.enabled
-      name: odk-central
-      repository: https://openg2p.github.io/openg2p-helm
-      version: v2024.1.0
-    - condition: mail.enabled
-      name: mail
-      repository: https://openg2p.github.io/openg2p-helm
-      version: 1.2.0
-    description: A Helm chart for OpenG2P PBMS Module
-    digest: b14231478ccdfbc76df31992afcfa88f5b4b66e59bbe2445cb9f9f6d1db44125
-    icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
-    name: openg2p-pbms
-    type: application
-    urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-1.2.0.tgz
-    version: 1.2.0
-  openg2p-social-registry:
-  - annotations:
-      catalog.cattle.io/display-name: OpenG2P Social Registry
-      openg2p.org/add-to-rancher: ""
-    apiVersion: v2
-    created: "2024-06-05T00:33:45.541232425Z"
-    dependencies:
-    - condition: odoo.enabled
-      name: odoo
-      repository: oci://registry-1.docker.io/bitnamicharts
-      version: 21.6.5
-    - condition: minio.enabled
-      name: minio
-      repository: oci://registry-1.docker.io/bitnamicharts
-      version: 12.12.2
-    - condition: odk-central.enabled
-      name: odk-central
-      repository: https://openg2p.github.io/openg2p-helm
-      version: v2024.1.0
-    - condition: mail.enabled
-      name: mail
-      repository: https://openg2p.github.io/openg2p-helm
-      version: 1.2.0
-    description: A Helm chart for OpenG2P Social Registry
-    digest: cc9cf8566100271db1660ac6e07ed864eb2800ab183ae19a48031c787df71e0f
-    icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
-    name: openg2p-social-registry
-    type: application
-    urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.2.0.tgz
-    version: 1.2.0
   spar:
   - annotations:
       catalog.cattle.io/display-name: OpenG2P SPAR
@@ -93,4 +30,4 @@ entries:
     urls:
     - https://openg2p.github.io/openg2p-helm/spar-1.0.0.tgz
     version: 1.0.0
-generated: "2024-06-05T10:31:39.812835338Z"
+generated: "2024-06-05T17:02:40.846963714+05:30"
