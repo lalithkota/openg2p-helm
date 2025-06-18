@@ -12,7 +12,7 @@ entries:
     name: landing
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/landing-0.0.0-develop.tgz
+    - ../landing-0.0.0-develop.tgz
     version: 0.0.0-develop
   openg2p-pbms:
   - annotations:
@@ -98,7 +98,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-2.0.2.tgz
+    - ../openg2p-pbms-2.0.2.tgz
     version: 2.0.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS
@@ -183,7 +183,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-2.0.1.tgz
+    - ../openg2p-pbms-2.0.1.tgz
     version: 2.0.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS
@@ -268,7 +268,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-2.0.0.tgz
+    - ../openg2p-pbms-2.0.0.tgz
     version: 2.0.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS
@@ -353,7 +353,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-2.0.0-develop.tgz
+    - ../openg2p-pbms-2.0.0-develop.tgz
     version: 2.0.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 1
@@ -400,7 +400,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-1.2.3.tgz
+    - ../openg2p-pbms-1.2.3.tgz
     version: 1.2.3
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 1
@@ -447,7 +447,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-1.2.2.tgz
+    - ../openg2p-pbms-1.2.2.tgz
     version: 1.2.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 1
@@ -494,7 +494,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-1.2.0.tgz
+    - ../openg2p-pbms-1.2.0.tgz
     version: 1.2.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 1
@@ -541,7 +541,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-1.2.0-develop.tgz
+    - ../openg2p-pbms-1.2.0-develop.tgz
     version: 1.2.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 1
@@ -588,7 +588,7 @@ entries:
     name: openg2p-pbms
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-0.0.0-develop.tgz
+    - ../openg2p-pbms-0.0.0-develop.tgz
     version: 0.0.0-develop
   openg2p-pbms-beneficiary-portal:
   - annotations:
@@ -605,7 +605,7 @@ entries:
     name: openg2p-pbms-beneficiary-portal
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-beneficiary-portal-2.0.1.tgz
+    - ../openg2p-pbms-beneficiary-portal-2.0.1.tgz
     version: 2.0.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS Beneficiary Portal
@@ -621,7 +621,7 @@ entries:
     name: openg2p-pbms-beneficiary-portal
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-beneficiary-portal-2.0.0.tgz
+    - ../openg2p-pbms-beneficiary-portal-2.0.0.tgz
     version: 2.0.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS Beneficiary Portal
@@ -637,7 +637,7 @@ entries:
     name: openg2p-pbms-beneficiary-portal
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-beneficiary-portal-2.0.0-develop.tgz
+    - ../openg2p-pbms-beneficiary-portal-2.0.0-develop.tgz
     version: 2.0.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS Beneficiary Portal
@@ -653,7 +653,7 @@ entries:
     name: openg2p-pbms-beneficiary-portal
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-beneficiary-portal-0.0.0-develop.tgz
+    - ../openg2p-pbms-beneficiary-portal-0.0.0-develop.tgz
     version: 0.0.0-develop
   openg2p-pbms-p2:
   - annotations:
@@ -686,7 +686,7 @@ entries:
     name: openg2p-pbms-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-p2-2.0.1.tgz
+    - ../openg2p-pbms-p2-2.0.1.tgz
     version: 2.0.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 2
@@ -718,7 +718,7 @@ entries:
     name: openg2p-pbms-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-p2-1.2.3.tgz
+    - ../openg2p-pbms-p2-1.2.3.tgz
     version: 1.2.3
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 2
@@ -750,7 +750,7 @@ entries:
     name: openg2p-pbms-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-p2-1.2.2.tgz
+    - ../openg2p-pbms-p2-1.2.2.tgz
     version: 1.2.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 2
@@ -782,7 +782,7 @@ entries:
     name: openg2p-pbms-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-p2-1.2.0.tgz
+    - ../openg2p-pbms-p2-1.2.0.tgz
     version: 1.2.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P PBMS - Part 2
@@ -814,7 +814,7 @@ entries:
     name: openg2p-pbms-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-pbms-p2-0.0.0-develop.tgz
+    - ../openg2p-pbms-p2-0.0.0-develop.tgz
     version: 0.0.0-develop
   openg2p-registry-bg-tasks:
   - annotations:
@@ -850,7 +850,7 @@ entries:
     name: openg2p-registry-bg-tasks
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-registry-bg-tasks-1.1.0.tgz
+    - ../openg2p-registry-bg-tasks-1.1.0.tgz
     version: 1.1.0
   openg2p-social-registry:
   - annotations:
@@ -944,7 +944,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.6.tgz
+    - ../openg2p-social-registry-2.0.6.tgz
     version: 2.0.6
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry
@@ -1037,7 +1037,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.5.tgz
+    - ../openg2p-social-registry-2.0.5.tgz
     version: 2.0.5
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry
@@ -1130,7 +1130,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.4.tgz
+    - ../openg2p-social-registry-2.0.4.tgz
     version: 2.0.4
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry
@@ -1223,7 +1223,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.3.tgz
+    - ../openg2p-social-registry-2.0.3.tgz
     version: 2.0.3
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry
@@ -1316,7 +1316,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.2.tgz
+    - ../openg2p-social-registry-2.0.2.tgz
     version: 2.0.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry
@@ -1413,7 +1413,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.1.tgz
+    - ../openg2p-social-registry-2.0.1.tgz
     version: 2.0.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry
@@ -1510,7 +1510,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.0.tgz
+    - ../openg2p-social-registry-2.0.0.tgz
     version: 2.0.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry
@@ -1603,7 +1603,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-2.0.0-develop.tgz
+    - ../openg2p-social-registry-2.0.0-develop.tgz
     version: 2.0.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1650,7 +1650,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.4.2.tgz
+    - ../openg2p-social-registry-1.4.2.tgz
     version: 1.4.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1697,7 +1697,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.4.0.tgz
+    - ../openg2p-social-registry-1.4.0.tgz
     version: 1.4.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1757,7 +1757,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.4.0-develop.tgz
+    - ../openg2p-social-registry-1.4.0-develop.tgz
     version: 1.4.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1804,7 +1804,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.3.2.tgz
+    - ../openg2p-social-registry-1.3.2.tgz
     version: 1.3.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1851,7 +1851,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.3.1.tgz
+    - ../openg2p-social-registry-1.3.1.tgz
     version: 1.3.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1898,7 +1898,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.3.0.tgz
+    - ../openg2p-social-registry-1.3.0.tgz
     version: 1.3.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1945,7 +1945,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.3.0-develop.tgz
+    - ../openg2p-social-registry-1.3.0-develop.tgz
     version: 1.3.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -1992,7 +1992,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.2.2.tgz
+    - ../openg2p-social-registry-1.2.2.tgz
     version: 1.2.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -2039,7 +2039,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.2.1.tgz
+    - ../openg2p-social-registry-1.2.1.tgz
     version: 1.2.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -2086,7 +2086,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-1.2.0.tgz
+    - ../openg2p-social-registry-1.2.0.tgz
     version: 1.2.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 1
@@ -2133,7 +2133,7 @@ entries:
     name: openg2p-social-registry
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-0.0.0-develop.tgz
+    - ../openg2p-social-registry-0.0.0-develop.tgz
     version: 0.0.0-develop
   openg2p-social-registry-p2:
   - annotations:
@@ -2170,7 +2170,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.4.2.tgz
+    - ../openg2p-social-registry-p2-1.4.2.tgz
     version: 1.4.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2206,7 +2206,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.4.0.tgz
+    - ../openg2p-social-registry-p2-1.4.0.tgz
     version: 1.4.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2238,7 +2238,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.4.0-develop.tgz
+    - ../openg2p-social-registry-p2-1.4.0-develop.tgz
     version: 1.4.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2270,7 +2270,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.3.2.tgz
+    - ../openg2p-social-registry-p2-1.3.2.tgz
     version: 1.3.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2302,7 +2302,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.3.1.tgz
+    - ../openg2p-social-registry-p2-1.3.1.tgz
     version: 1.3.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2334,7 +2334,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.3.0.tgz
+    - ../openg2p-social-registry-p2-1.3.0.tgz
     version: 1.3.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2366,7 +2366,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.3.0-develop.tgz
+    - ../openg2p-social-registry-p2-1.3.0-develop.tgz
     version: 1.3.0-develop
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2398,7 +2398,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.2.2.tgz
+    - ../openg2p-social-registry-p2-1.2.2.tgz
     version: 1.2.2
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2430,7 +2430,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.2.1.tgz
+    - ../openg2p-social-registry-p2-1.2.1.tgz
     version: 1.2.1
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2462,7 +2462,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-1.2.0.tgz
+    - ../openg2p-social-registry-p2-1.2.0.tgz
     version: 1.2.0
   - annotations:
       catalog.cattle.io/display-name: OpenG2P Social Registry - Part 2
@@ -2498,7 +2498,7 @@ entries:
     name: openg2p-social-registry-p2
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/openg2p-social-registry-p2-0.0.0-develop.tgz
+    - ../openg2p-social-registry-p2-0.0.0-develop.tgz
     version: 0.0.0-develop
   spar:
   - annotations:
@@ -2528,6 +2528,6 @@ entries:
     name: spar
     type: application
     urls:
-    - https://openg2p.github.io/openg2p-helm/spar-1.0.0.tgz
+    - ../spar-1.0.0.tgz
     version: 1.0.0
 generated: "2025-06-17T16:09:49.304306392Z"
